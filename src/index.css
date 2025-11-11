@@ -1,7 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:opsz,wght@18..144,700&family=Passion+One&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
+@theme{
+  --font-logo:"Passion One", sans-serif;
+  --font-heading:"Merriweather", serif;
+}
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
