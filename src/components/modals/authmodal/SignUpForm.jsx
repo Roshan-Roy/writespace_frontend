@@ -11,7 +11,7 @@ import { Spinner } from "@/components/ui/spinner"
 import toast from "react-hot-toast"
 
 
-const SignUpForm = ({ setOpenModal }) => {
+const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
     const [data, setData] = useState({
         username: "",
         email: "",
@@ -35,23 +35,26 @@ const SignUpForm = ({ setOpenModal }) => {
 
     const sendData = async (data) => {
         try {
+            setDisableClosing(true)
             setLoading(true)
             await axios.post(`${API_URL}signup/`, data);
             setOpenModal(null)
+            toast.success("An email has been sent")
         } catch (e) {
             const status = e.response?.status
             if (status !== 400) {
                 toast.error("An error occurred")
-                setLoading(false)
-                return
+            } else {
+                const { username, email } = e.response.data
+                setErrors(prev => ({
+                    ...prev,
+                    username: Array.isArray(username) ? username[0] : "",
+                    email: Array.isArray(email) ? email[0] : ""
+                }))
             }
-            const { username, email } = e.response.data
-            setErrors(prev => ({
-                ...prev,
-                username: Array.isArray(username) ? username[0] : "",
-                email: Array.isArray(email) ? email[0] : ""
-            }))
             setLoading(false)
+        } finally {
+            setDisableClosing(false)
         }
     }
 
@@ -88,7 +91,7 @@ const SignUpForm = ({ setOpenModal }) => {
                 <InputError message={errors.password} />
                 <Button className="w-full mt-3 h-11 rounded-2xl" disabled={loading}>{loading ? <Spinner /> : "Sign Up"}</Button>
             </div>
-            <p className="text-center text-sm">Already have an account? <u onClick={handleFormChange} className="cursor-default">Sign in</u></p>
+            <p className="text-center text-sm">Already have an account? <u onClick={handleFormChange} className={`cursor-default ${loading ? "pointer-events-none" : ""}`}>Sign in</u></p>
         </form>
     )
 }
