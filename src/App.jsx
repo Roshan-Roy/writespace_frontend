@@ -3,6 +3,7 @@ import MainLayout from "./components/mycomponents/mainlayout/MainLayout"
 import Home from "./pages/Home"
 import About from "./pages/About"
 import { ThemeProvider } from "./contexts/ThemeContext"
+import { Toaster } from "react-hot-toast"
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
 function App() {
   return <ThemeProvider storageKey="writespace-ui-theme" defaultTheme="light">
     <RouterProvider router={router} />
+    <Toaster />
   </ThemeProvider>
 }
 

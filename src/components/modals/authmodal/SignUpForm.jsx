@@ -5,6 +5,10 @@ import InputError from "./InputError"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { signupSchema, formatErrors } from "@/lib/validation"
+import { API_URL } from "@/lib/api"
+import axios from "axios"
+import { Spinner } from "@/components/ui/spinner"
+import toast from "react-hot-toast"
 
 
 const SignUpForm = ({ setOpenModal }) => {
@@ -18,23 +22,45 @@ const SignUpForm = ({ setOpenModal }) => {
         email: "",
         password: ""
     })
+    const [loading, setLoading] = useState(false)
 
     const handleFormChange = () => {
         setOpenModal("signin")
     }
+
+    const handleInputChange = (value, fieldName) => {
+        setData(prevData => ({ ...prevData, [fieldName]: value }))
+        setErrors(preErrors => ({ ...preErrors, [fieldName]: "" }))
+    }
+
+    const sendData = async (data) => {
+        try {
+            setLoading(true)
+            await axios.post(`${API_URL}signup/`, data);
+            setOpenModal(null)
+        } catch (e) {
+            const status = e.response?.status
+            if (status !== 400) {
+                toast.error("An error occurred")
+                setLoading(false)
+                return
+            }
+            const { username, email } = e.response.data
+            setErrors(prevErrors => ({ ...prevErrors, username, email }))
+            setLoading(false)
+        }
+    }
+
     const handleFormSubmit = (e) => {
         e.preventDefault()
 
         const result = signupSchema.safeParse(data);
         if (result.success) {
-            
+            setErrors(prevErrors => ({ ...prevErrors, email: "", username: "" }));
+            sendData(result.data)
         } else {
             setErrors(prevErrors => ({ ...prevErrors, ...formatErrors(result.error.issues) }));
         }
-    }
-    const handleInputChange = (value, fieldName) => {
-        setData(prevData => ({ ...prevData, [fieldName]: value }))
-        setErrors(preErrors => ({ ...preErrors, [fieldName]: "" }))
     }
 
     return (
@@ -56,7 +82,7 @@ const SignUpForm = ({ setOpenModal }) => {
                     <Input id="password" type="password" placeholder="Enter password" className="h-11 px-4 rounded-2xl" value={data.password} onChange={e => handleInputChange(e.target.value, "password")} aria-invalid={!!errors.password} />
                 </div>
                 <InputError message={errors.password} />
-                <Button className="w-full mt-3 h-11 rounded-2xl">Sign Up</Button>
+                <Button className="w-full mt-3 h-11 rounded-2xl" disabled={loading}>{loading ? <Spinner /> : "Sign Up"}</Button>
             </div>
             <p className="text-center text-sm">Already have an account? <u onClick={handleFormChange} className="cursor-default">Sign in</u></p>
         </form>
