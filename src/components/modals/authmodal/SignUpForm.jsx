@@ -9,6 +9,9 @@ import { API_URL } from "@/lib/api"
 import axios from "axios"
 import { Spinner } from "@/components/ui/spinner"
 import toast from "react-hot-toast"
+import { CircleCheck, CircleX } from "lucide-react"
+import CustomToast from "@/components/mycomponents/toast/Customtoast"
+
 
 
 const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
@@ -37,13 +40,13 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
         try {
             setDisableClosing(true)
             setLoading(true)
-            await axios.post(`${API_URL}signup/`, data);
+            await axios.post(`${API_URL}signup/`, data)
             setOpenModal(null)
-            toast.success("An email has been sent")
+            toast.custom(t => <CustomToast t={t} message="Verification email sent!" icon={<CircleCheck className="w-4 h-4 text-green-500" />} />)
         } catch (e) {
             const status = e.response?.status
             if (status !== 400) {
-                toast.error("An error occurred")
+                toast.custom(t => <CustomToast t={t} message="An error occurred" icon={<CircleX className="w-4 h-4 text-red-500" />} />)
             } else {
                 const { username, email } = e.response.data
                 setErrors(prev => ({
@@ -63,10 +66,10 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
 
         const result = signupSchema.safeParse(data);
         if (result.success) {
-            setErrors(prevErrors => ({ ...prevErrors, email: "", username: "" }));
+            setErrors(prevErrors => ({ ...prevErrors, email: "", username: "" }))
             sendData(result.data)
         } else {
-            setErrors(prevErrors => ({ ...prevErrors, ...formatErrors(result.error.issues) }));
+            setErrors(prevErrors => ({ ...prevErrors, ...formatErrors(result.error.issues) }))
         }
     }
 
