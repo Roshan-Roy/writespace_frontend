@@ -46,7 +46,11 @@ const SignUpForm = ({ setOpenModal }) => {
                 return
             }
             const { username, email } = e.response.data
-            setErrors(prevErrors => ({ ...prevErrors, username, email }))
+            setErrors(prev => ({
+                ...prev,
+                username: Array.isArray(username) ? username[0] : "",
+                email: Array.isArray(email) ? email[0] : ""
+            }))
             setLoading(false)
         }
     }
