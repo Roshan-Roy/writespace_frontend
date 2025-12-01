@@ -36,7 +36,7 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
         setErrors(preErrors => ({ ...preErrors, [fieldName]: "" }))
     }
 
-    const sendData = async (data) => {
+    const signUp = async (data) => {
         try {
             setDisableClosing(true)
             setLoading(true)
@@ -67,7 +67,7 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
         const result = signupSchema.safeParse(data);
         if (result.success) {
             setErrors(prevErrors => ({ ...prevErrors, email: "", username: "" }))
-            sendData(result.data)
+            signUp(result.data)
         } else {
             setErrors(prevErrors => ({ ...prevErrors, ...formatErrors(result.error.issues) }))
         }
