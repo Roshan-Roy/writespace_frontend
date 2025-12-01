@@ -45,15 +45,15 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
             toast.custom(t => <CustomToast t={t} message="Verification email sent!" icon={CircleCheck} iconStyles="text-green-500" />)
         } catch (e) {
             const status = e.response?.status
-            if (status !== 400) {
-                toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
-            } else {
+            if (status === 400) {
                 const { username, email } = e.response.data
                 setErrors(prev => ({
                     ...prev,
                     username: Array.isArray(username) ? username[0] : "",
                     email: Array.isArray(email) ? email[0] : ""
                 }))
+            } else {
+                toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
             }
             setLoading(false)
         } finally {

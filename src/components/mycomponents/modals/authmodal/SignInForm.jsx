@@ -5,6 +5,11 @@ import { signinSchema } from "@/lib/validation"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { Spinner } from "@/components/ui/spinner"
+import toast from "react-hot-toast"
+import CustomToast from "../../toast/CustomToast"
+import { CircleX, CircleCheck } from "lucide-react"
+import axios from "axios"
+import { API_URL } from "@/lib/api"
 
 const SignInForm = ({ setOpenModal, setDisableClosing }) => {
     const [data, setData] = useState({
@@ -28,7 +33,23 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
     }
 
     const signIn = async (data) => {
-        console.log(data)
+        try {
+            setDisableClosing(true)
+            setLoading(true)
+            await axios.post(`${API_URL}token/`, data)
+            setOpenModal(null)
+            toast.custom(t => <CustomToast t={t} message="Signed in successfully!" icon={CircleCheck} iconStyles="text-green-500" />)
+        } catch (e) {
+            const status = e.response?.status
+            if (status === 401) {
+                toast.custom(t => <CustomToast t={t} message="Invalid credentials" icon={CircleX} iconStyles="text-red-500" />)
+            } else {
+                toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
+            }
+            setLoading(false)
+        } finally {
+            setDisableClosing(false)
+        }
     }
 
     return (
