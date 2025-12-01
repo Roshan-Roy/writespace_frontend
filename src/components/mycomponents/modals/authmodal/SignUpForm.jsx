@@ -42,11 +42,11 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
             setLoading(true)
             await axios.post(`${API_URL}signup/`, data)
             setOpenModal(null)
-            toast.custom(t => <CustomToast t={t} message="Verification email sent!" icon={<CircleCheck className="w-4 h-4 text-green-500" />} />)
+            toast.custom(t => <CustomToast t={t} message="Verification email sent!" icon={CircleCheck} iconStyles="text-green-500" />)
         } catch (e) {
             const status = e.response?.status
             if (status !== 400) {
-                toast.custom(t => <CustomToast t={t} message="An error occurred" icon={<CircleX className="w-4 h-4 text-red-500" />} />)
+                toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
             } else {
                 const { username, email } = e.response.data
                 setErrors(prev => ({
