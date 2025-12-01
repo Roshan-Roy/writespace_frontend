@@ -9,10 +9,9 @@ import { API_URL } from "@/lib/api"
 import axios from "axios"
 import { Spinner } from "@/components/ui/spinner"
 import toast from "react-hot-toast"
-import { CircleCheck, CircleX } from "lucide-react"
+import { CircleCheck, CircleX, EyeOff, Eye } from "lucide-react"
 import CustomToast from "@/components/mycomponents/toast/Customtoast"
-
-
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "@/components/ui/input-group"
 
 const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
     const [data, setData] = useState({
@@ -25,6 +24,7 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
         email: "",
         password: ""
     })
+    const [passwordVisible, setPasswordVisible] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const handleFormChange = () => {
@@ -34,6 +34,9 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
     const handleInputChange = (value, fieldName) => {
         setData(prevData => ({ ...prevData, [fieldName]: value }))
         setErrors(preErrors => ({ ...preErrors, [fieldName]: "" }))
+    }
+    const handleTogglePasswordVisibility = () => {
+        setPasswordVisible(prevVisible => !prevVisible)
     }
 
     const signUp = async (data) => {
@@ -89,7 +92,18 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
                 <InputError message={errors.email} />
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="password">Password</Label>
-                    <Input id="password" type="password" placeholder="Enter password" className="h-11 px-4 rounded-2xl" value={data.password} onChange={e => handleInputChange(e.target.value, "password")} aria-invalid={!!errors.password} />
+                    <InputGroup className="h-11 rounded-2xl">
+                        <InputGroupInput id="password" type={passwordVisible ? "text" : "password"} placeholder="Enter password" className="pl-4" value={data.password} onChange={e => handleInputChange(e.target.value, "password")} aria-invalid={!!errors.password} />
+                        <InputGroupAddon align="inline-end">
+                            <InputGroupButton
+                                className="rounded-xl"
+                                size="icon-sm"
+                                onClick={handleTogglePasswordVisibility}
+                            >
+                                {passwordVisible ? <Eye /> : <EyeOff />}
+                            </InputGroupButton>
+                        </InputGroupAddon>
+                    </InputGroup>
                 </div>
                 <InputError message={errors.password} />
                 <Button className="w-full mt-3 h-11 rounded-2xl" disabled={loading}>{loading ? <Spinner /> : "Sign Up"}</Button>
