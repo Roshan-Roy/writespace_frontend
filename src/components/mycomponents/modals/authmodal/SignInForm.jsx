@@ -7,15 +7,18 @@ import { useState } from "react"
 import { Spinner } from "@/components/ui/spinner"
 import toast from "react-hot-toast"
 import CustomToast from "../../toast/CustomToast"
-import { CircleX, CircleCheck } from "lucide-react"
+import { CircleX, CircleCheck, EyeOff, Eye } from "lucide-react"
 import axios from "axios"
 import { API_URL } from "@/lib/api"
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "@/components/ui/input-group"
+import { Link } from "react-router"
 
 const SignInForm = ({ setOpenModal, setDisableClosing }) => {
     const [data, setData] = useState({
         username: "",
         password: ""
     })
+    const [passwordVisible, setPasswordVisible] = useState(false)
     const [loading, setLoading] = useState(false)
     const disabled = !signinSchema.safeParse(data).success
 
@@ -25,13 +28,15 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
     const handleFormChange = () => {
         setOpenModal("signup")
     }
+    const handleTogglePasswordVisibility = () => {
+        setPasswordVisible(prevVisible => !prevVisible)
+    }
     const handleFormSubmit = (e) => {
         e.preventDefault()
         const result = signinSchema.safeParse(data)
         if (!result.success) return
         signIn(result.data)
     }
-
     const signIn = async (data) => {
         try {
             setDisableClosing(true)
@@ -51,7 +56,6 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
             setDisableClosing(false)
         }
     }
-
     return (
         <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
             <DialogTitle className="text-3xl text-center font-heading">Sign in</DialogTitle>
@@ -62,11 +66,23 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
                 </div>
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="password">Password</Label>
-                    <Input id="password" type="password" placeholder="Enter password" className="h-11 px-4 rounded-2xl" value={data.password} onChange={e => handleInputChange(e.target.value, "password")} />
+                    <InputGroup className="h-11 rounded-2xl">
+                        <InputGroupInput id="password" type={passwordVisible ? "text" : "password"} placeholder="Enter password" className="pl-4" value={data.password} onChange={e => handleInputChange(e.target.value, "password")} />
+                        <InputGroupAddon align="inline-end">
+                            <InputGroupButton
+                                className="rounded-xl"
+                                size="icon-sm"
+                                onClick={handleTogglePasswordVisibility}
+                            >
+                                {passwordVisible ? <Eye /> : <EyeOff />}
+                            </InputGroupButton>
+                        </InputGroupAddon>
+                    </InputGroup>
                 </div>
                 <Button className="w-full mt-3 h-11 rounded-2xl" disabled={disabled || loading}>{loading ? <Spinner /> : "Sign In"}</Button>
             </div>
-            <p className="text-center text-sm">No account? <u onClick={handleFormChange} className="cursor-default">Sign up</u></p>
+            <Link className="text-center text-sm self-center hover:underline" to="forgot_password">Forgot password?</Link>
+            <p className="text-center text-sm">No account? <span onClick={handleFormChange} className={`cursor-pointer font-semibold ${loading ? "pointer-events-none" : ""}`}>Sign up</span></p>
         </form>
     )
 }

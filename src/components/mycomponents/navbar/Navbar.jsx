@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className="w-17/20 flex justify-between items-center h-20 gap-2">
           <Link to="/" className="font-logo text-2xl lg:text-3xl">Writespace</Link>
           <div className="flex gap-6 items-center">
-            <span className="hidden cursor-default sm:inline" onClick={handleOpenSignInModal}>Sign in</span>
+            <span className="hidden cursor-pointer sm:inline" onClick={handleOpenSignInModal}>Sign in</span>
             <Button className="rounded-full text-xs lg:text-sm lg:h-10 lg:px-6" onClick={handleOpenSignUpModal}>Get started</Button>
           </div>
         </div>

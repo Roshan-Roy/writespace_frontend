@@ -30,7 +30,6 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
     const handleFormChange = () => {
         setOpenModal("signin")
     }
-
     const handleInputChange = (value, fieldName) => {
         setData(prevData => ({ ...prevData, [fieldName]: value }))
         setErrors(preErrors => ({ ...preErrors, [fieldName]: "" }))
@@ -38,7 +37,6 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
     const handleTogglePasswordVisibility = () => {
         setPasswordVisible(prevVisible => !prevVisible)
     }
-
     const signUp = async (data) => {
         try {
             setDisableClosing(true)
@@ -63,7 +61,6 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
             setDisableClosing(false)
         }
     }
-
     const handleFormSubmit = (e) => {
         e.preventDefault()
 
@@ -75,7 +72,6 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
             setErrors(prevErrors => ({ ...prevErrors, ...formatErrors(result.error.issues) }))
         }
     }
-
     return (
         <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
             <DialogTitle className="text-3xl text-center font-heading">Sign up</DialogTitle>
@@ -108,7 +104,7 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
                 <InputError message={errors.password} />
                 <Button className="w-full mt-3 h-11 rounded-2xl" disabled={loading}>{loading ? <Spinner /> : "Sign Up"}</Button>
             </div>
-            <p className="text-center text-sm">Already have an account? <u onClick={handleFormChange} className={`cursor-default ${loading ? "pointer-events-none" : ""}`}>Sign in</u></p>
+            <p className="text-center text-sm">Already have an account? <span onClick={handleFormChange} className={`cursor-pointer font-semibold ${loading ? "pointer-events-none" : ""}`}>Sign in</span></p>
         </form>
     )
 }

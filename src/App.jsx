@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router"
 import MainLayout from "./components/mycomponents/mainlayout/MainLayout"
 import Home from "./pages/Home"
 import About from "./pages/About"
+import ForgotPassword from "./pages/ForgotPassword"
 import { ThemeProvider } from "./contexts/ThemeContext"
 import { Toaster } from "react-hot-toast"
 
@@ -11,9 +12,10 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <Home /> },
-      { path: "about", element: <About /> }
+      { path: "about", element: <About /> },
     ]
   },
+  { path: "forgot_password", element: <ForgotPassword /> }
 ]);
 
 function App() {
