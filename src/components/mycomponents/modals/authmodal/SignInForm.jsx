@@ -31,12 +31,6 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
     const handleTogglePasswordVisibility = () => {
         setPasswordVisible(prevVisible => !prevVisible)
     }
-    const handleFormSubmit = (e) => {
-        e.preventDefault()
-        const result = signinSchema.safeParse(data)
-        if (!result.success) return
-        signIn(result.data)
-    }
     const signIn = async (data) => {
         try {
             setDisableClosing(true)
@@ -55,6 +49,12 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
         } finally {
             setDisableClosing(false)
         }
+    }
+    const handleFormSubmit = (e) => {
+        e.preventDefault()
+        const result = signinSchema.safeParse(data)
+        if (!result.success) return
+        signIn(result.data)
     }
     return (
         <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
@@ -81,7 +81,7 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
                 </div>
                 <Button className="w-full mt-3 h-11 rounded-2xl" disabled={disabled || loading}>{loading ? <Spinner /> : "Sign In"}</Button>
             </div>
-            <Link className="text-center text-sm self-center hover:underline" to="forgot_password">Forgot password?</Link>
+            <Link className="text-sm self-center hover:underline font-semibold" to="forgot_password">Forgot password?</Link>
             <p className="text-center text-sm">No account? <span onClick={handleFormChange} className={`cursor-pointer font-semibold ${loading ? "pointer-events-none" : ""}`}>Sign up</span></p>
         </form>
     )

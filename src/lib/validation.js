@@ -28,3 +28,7 @@ export const signinSchema = z.object({
     username: z.string().min(3).max(20).trim(),
     password: z.string().min(8).max(32)
 });
+
+export const forgotPasswordSchema = z.object({
+    email: z.email("Please enter a valid email address")
+});
