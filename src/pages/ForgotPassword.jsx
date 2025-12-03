@@ -61,7 +61,7 @@ const ForgotPassword = () => {
             <Label htmlFor="email">Email</Label>
             <Input id="email" placeholder="Enter your email" className="h-11 px-4 rounded-2xl" value={data.email} onChange={e => setData(prev => ({ ...prev, email: e.target.value }))} />
           </div>
-          <Button className="w-full h-11 mt-1 mb-3 rounded-2xl" disabled={disabled || loading}>{loading ? <Spinner /> : "Reset Password"}</Button>
+          <Button className="w-full h-11 mt-1 mb-3 rounded-2xl" disabled={disabled || loading}>{loading ? <Spinner /> : "Request a reset link"}</Button>
           <Link className="self-center text-sm hover:underline font-semibold" to="/">Back to home</Link>
         </form>
       )}

@@ -30,5 +30,12 @@ export const signinSchema = z.object({
 });
 
 export const forgotPasswordSchema = z.object({
-    email: z.email("Please enter a valid email address")
+    email: z.email()
+});
+
+export const resetPasswordSchema = z.object({
+    password: z.string().min(8).max(32),
+    cpassword: z.string(),
+}).refine((data) => data.password === data.cpassword, {
+    path: ["cpassword"]
 });

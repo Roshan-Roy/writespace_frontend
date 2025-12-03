@@ -5,6 +5,7 @@ import About from "./pages/About"
 import ForgotPassword from "./pages/ForgotPassword"
 import { ThemeProvider } from "./contexts/ThemeContext"
 import { Toaster } from "react-hot-toast"
+import ResetPassword from "./pages/ResetPassword"
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,8 @@ const router = createBrowserRouter([
       { path: "about", element: <About /> },
     ]
   },
-  { path: "forgot_password", element: <ForgotPassword /> }
+  { path: "forgot_password", element: <ForgotPassword /> },
+  { path: "reset_password/:uidb64/:token", element: <ResetPassword /> }
 ]);
 
 function App() {
