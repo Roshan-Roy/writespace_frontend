@@ -6,6 +6,7 @@ import ForgotPassword from "./pages/ForgotPassword"
 import { ThemeProvider } from "./contexts/ThemeContext"
 import { Toaster } from "react-hot-toast"
 import ResetPassword from "./pages/ResetPassword"
+import VerifyEmail from "./pages/VerifyEmail"
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
     ]
   },
   { path: "forgot_password", element: <ForgotPassword /> },
-  { path: "reset_password/:uidb64/:token", element: <ResetPassword /> }
+  { path: "reset_password/:uidb64/:token", element: <ResetPassword /> },
+  { path: "verify_email/:uidb64/:token", element: <VerifyEmail /> }
 ]);
 
 function App() {
