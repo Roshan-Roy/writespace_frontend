@@ -15,7 +15,7 @@ import { Link } from "react-router"
 
 const SignInForm = ({ setOpenModal, setDisableClosing }) => {
     const [data, setData] = useState({
-        username: "",
+        username_or_email: "",
         password: ""
     })
     const [passwordVisible, setPasswordVisible] = useState(false)
@@ -61,8 +61,8 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
             <DialogTitle className="text-3xl text-center font-heading">Sign in</DialogTitle>
             <div className="flex flex-col gap-3.5">
                 <div className="flex flex-col gap-2">
-                    <Label htmlFor="username">Username</Label>
-                    <Input id="username" placeholder="Enter username" className="h-11 px-4 rounded-2xl" value={data.username} onChange={e => handleInputChange(e.target.value, "username")} />
+                    <Label htmlFor="username_or_email">Username</Label>
+                    <Input id="username_or_email" placeholder="Enter username or email" className="h-11 px-4 rounded-2xl" value={data.username_or_email} onChange={e => handleInputChange(e.target.value, "username_or_email")} />
                 </div>
                 <div className="flex flex-col gap-2">
                     <Label htmlFor="password">Password</Label>
