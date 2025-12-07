@@ -12,8 +12,10 @@ import axios from "axios"
 import { API_URL } from "@/lib/api"
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "@/components/ui/input-group"
 import { Link } from "react-router"
+import { useAuth } from "@/contexts/AuthContext"
 
 const SignInForm = ({ setOpenModal, setDisableClosing }) => {
+    const { login } = useAuth()
     const [data, setData] = useState({
         username_or_email: "",
         password: ""
@@ -35,7 +37,8 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
         try {
             setDisableClosing(true)
             setLoading(true)
-            await axios.post(`${API_URL}token/`, data)
+            const response = await axios.post(`${API_URL}token/`, data)
+            login(response.data)
             setOpenModal(null)
             toast.custom(t => <CustomToast t={t} message="Signed in successfully!" icon={CircleCheck} iconStyles="text-green-500" />)
         } catch (e) {

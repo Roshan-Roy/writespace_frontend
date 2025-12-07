@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext"
 import { Toaster } from "react-hot-toast"
 import ResetPassword from "./pages/ResetPassword"
 import VerifyEmail from "./pages/VerifyEmail"
+import { AuthContextProvider } from "./contexts/AuthContext"
 
 const router = createBrowserRouter([
   {
@@ -23,10 +24,14 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <ThemeProvider storageKey="writespace-ui-theme" defaultTheme="light">
-    <RouterProvider router={router} />
-    <Toaster />
-  </ThemeProvider>
+  return (
+    <AuthContextProvider>
+      <ThemeProvider storageKey="writespace-ui-theme" defaultTheme="light">
+        <RouterProvider router={router} />
+        <Toaster />
+      </ThemeProvider>
+    </AuthContextProvider>
+  )
 }
 
 export default App
