@@ -3,7 +3,7 @@ import { Link } from "react-router"
 import { AuthModal } from "@/components/mycomponents/modals/authmodal/AuthModal"
 import { useState } from "react"
 
-const Navbar = () => {
+const PublicNavbar = () => {
 
   const [openModal, setOpenModal] = useState(null)
 
@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex justify-center border-b border-b-foreground fixed w-full bg-background-home">
+      <div className="flex justify-center border-b border-b-foreground fixed top-0 w-full bg-background-home">
         <div className="w-17/20 flex justify-between items-center h-20 gap-2">
           <Link to="/" className="font-logo text-2xl lg:text-3xl">Writespace</Link>
           <div className="flex gap-6 items-center">
@@ -31,4 +31,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default PublicNavbar

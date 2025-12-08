@@ -1,7 +1,11 @@
 import { Info } from "lucide-react"
 import SwitchThemeButtonHomeAbout from "@/components/mycomponents/switchThemeButtons/SwitchThemeButtonHomeAbout"
+import { useAuth } from "@/contexts/AuthContext"
+import { Navigate } from "react-router"
 
 const About = () => {
+    const { isAuthenticated } = useAuth()
+    if (isAuthenticated) return <Navigate to="/" />
     return (
         <div className="bg-background-home">
             <div className="mx-auto w-17/20 sm:text-center min-h-[calc(100dvh-141.6px)] lg:min-h-[calc(100dvh-149.6px)] pt-10 pb-14 lg:pt-14 lg:pb-18">
@@ -24,8 +28,8 @@ const About = () => {
             </div>
             <div className="border-t border-t-foreground flex justify-center">
                 <div className="h-15 lg:h-17 w-17/20 flex items-center sm:justify-center gap-3 lg:gap-4">
-                    <Info className="lg:w-7 lg:h-7" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}/>
-                    <SwitchThemeButtonHomeAbout/>
+                    <Info className="lg:w-7 lg:h-7" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} />
+                    <SwitchThemeButtonHomeAbout />
                 </div>
             </div>
         </div>

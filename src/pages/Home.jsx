@@ -1,35 +1,17 @@
-import { Info } from "lucide-react"
-import { Link } from "react-router"
-import { Button } from "@/components/ui/button"
-import SwitchThemeButtonHomeAbout from "@/components/mycomponents/switchThemeButtons/SwitchThemeButtonHomeAbout"
-import { AuthModal } from "@/components/mycomponents/modals/authmodal/AuthModal"
-import { useState } from "react"
-
 const Home = () => {
-    const [openModal, setOpenModal] = useState(null)
-    
-    const handleOpenSignUpModal = () => {
-        setOpenModal("signup")
-    }
+  return (
+    <div onClick={() => alert("HiF")}>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, urna eget elementum consectetur, justo enim dictum mauris, id dapibus turpis nisl et velit. Suspendisse rhoncus eleifend sem, vitae dignissim lectus auctor sed. Vivamus at pharetra lacus. Donec condimentum efficitur leo, vel vulputate libero congue a. Curabitur fermentum, quam at congue aliquet, odio nisi tempus odio, non maximus nisl ante at neque. Nam porttitor odio ac tortor eleifend fermentum. Vestibulum mattis lorem id magna finibus dapibus. Quisque facilisis magna vitae justo volutpat, non interdum lacus dapibus. Nulla malesuada ligula lorem, nec pulvinar magna condimentum at.
 
-    return (
-        <>
-            <div className="flex flex-col items-center h-[calc(100dvh-80px)] bg-background-home min-h-[450px]">
-                <div className="flex-1 flex flex-col justify-center w-17/20 gap-3 lg:gap-5 sm:text-center">
-                    <h1 className="font-heading text-[54px] sm:text-[70px] lg:text-[90px] leading-tight">Open<br />minds <span className="whitespace-nowrap">& words</span></h1>
-                    <h2 className="text-xl lg:text-2xl">Write, read, and share stories that live beyond the page</h2>
-                    <Button className="self-start sm:self-center mt-5 rounded-full px-7 lg:px-10 lg:h-12 lg:text-base" size="lg" onClick={handleOpenSignUpModal}>Start Reading</Button>
-                </div>
-                <div className="border-t border-t-foreground w-full flex justify-center">
-                    <div className="h-15 lg:h-17 w-17/20 flex items-center sm:justify-center gap-3 lg:gap-4">
-                        <Link to="about"><Info className="lg:w-7 lg:h-7" /></Link>
-                        <SwitchThemeButtonHomeAbout />
-                    </div>
-                </div>
-            </div>
-            <AuthModal openModal={openModal} setOpenModal={setOpenModal} />
-        </>
-    )
+      Integer tempor eu nibh ut ultricies. Nulla faucibus fermentum risus, vitae vulputate justo eleifend a. Maecenas dignissim lectus vel felis aliquet, sit amet hendrerit ligula lobortis. Sed dictum, est non aliquam cursus, ante libero placerat velit, sed ultricies leo mauris eu odio. Vestibulum tempor interdum gravida. Etiam tincidunt turpis nec pellentesque eleifend. Etiam imperdiet mauris at facilisis congue. Ut dictum efficitur odio, et vulputate leo aliquet a. Aliquam erat volutpat. Donec congue vestibulum tellus, non pretium justo pulvinar vel. Nam gravida tortor eu scelerisque cursus. Aenean ultrices, augue nec tincidunt ullamcorper, dolor magna volutpat velit, vitae iaculis lorem sapien in libero.
+
+      Curabitur fermentum elementum elit, vitae faucibus metus luctus a. Mauris sodales orci ligula, sed aliquet nibh hendrerit nec. Fusce nec massa a nisl porta consequat. Sed hendrerit ullamcorper eleifend. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec fringilla leo sed mauris dapibus pulvinar. Curabitur varius convallis lorem sit amet bibendum. In consequat velit sit amet sem cursus interdum. Vestibulum sodales dapibus lacus, vitae viverra risus pellentesque id. Pellentesque feugiat justo velit, eget ornare arcu dictum eu. Cras cursus risus et nulla efficitur commodo. Sed commodo rutrum purus, eget congue nunc porta non.
+
+      Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam in volutpat massa. Integer egestas bibendum justo, eget volutpat dolor tempus sed. Suspendisse potenti. Sed accumsan odio odio, ut vulputate erat lobortis non. Curabitur sit amet volutpat libero. Integer congue, lectus nec vulputate hendrerit, neque nibh ullamcorper risus, eget suscipit enim arcu id felis. In in ex magna. Vestibulum efficitur lectus a nunc semper aliquam. Phasellus dapibus velit at velit dignissim, nec pellentesque lacus pellentesque. Duis in consectetur arcu. Mauris id mi dignissim, aliquet ipsum quis, pretium augue.
+
+      Morbi feugiat sapien nec fermentum ornare. Vestibulum ac mi risus. In suscipit odio id posuere blandit. Nunc ultrices facilisis condimentum. Ut ultricies vel felis vel placerat. Duis mattis ex ut dignissim efficitur. Curabitur in elementum arcu. Suspendisse nec tortor molestie, suscipit lectus sit amet, bibendum purus. In hac habitasse platea dictumst. Integer vehicula luctus tellus a pharetra. In bibendum magna justo, id commodo eros eleifend non.
+    </div>
+  )
 }
 
 export default Home

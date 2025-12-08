@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router"
 import MainLayout from "./components/mycomponents/mainlayout/MainLayout"
-import Home from "./pages/Home"
 import About from "./pages/About"
 import ForgotPassword from "./pages/ForgotPassword"
 import { ThemeProvider } from "./contexts/ThemeContext"
@@ -8,13 +7,14 @@ import { Toaster } from "react-hot-toast"
 import ResetPassword from "./pages/ResetPassword"
 import VerifyEmail from "./pages/VerifyEmail"
 import { AuthContextProvider } from "./contexts/AuthContext"
+import LandingPageOrHome from "./pages/LandingPageOrHome"
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <LandingPageOrHome /> },
       { path: "about", element: <About /> },
     ]
   },
