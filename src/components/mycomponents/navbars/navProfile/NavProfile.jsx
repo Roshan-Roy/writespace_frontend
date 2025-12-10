@@ -38,7 +38,7 @@ const NavProfile = () => {
 
         const handleScroll = () => {
             setProfileOpen(false)
-        };
+        }
 
         window.addEventListener("scroll", handleScroll, { passive: true })
 
