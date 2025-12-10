@@ -1,6 +1,6 @@
 const Home = () => {
   return (
-    <div onClick={() => alert("HiF")}>
+    <div>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, urna eget elementum consectetur, justo enim dictum mauris, id dapibus turpis nisl et velit. Suspendisse rhoncus eleifend sem, vitae dignissim lectus auctor sed. Vivamus at pharetra lacus. Donec condimentum efficitur leo, vel vulputate libero congue a. Curabitur fermentum, quam at congue aliquet, odio nisi tempus odio, non maximus nisl ante at neque. Nam porttitor odio ac tortor eleifend fermentum. Vestibulum mattis lorem id magna finibus dapibus. Quisque facilisis magna vitae justo volutpat, non interdum lacus dapibus. Nulla malesuada ligula lorem, nec pulvinar magna condimentum at.
 
       Integer tempor eu nibh ut ultricies. Nulla faucibus fermentum risus, vitae vulputate justo eleifend a. Maecenas dignissim lectus vel felis aliquet, sit amet hendrerit ligula lobortis. Sed dictum, est non aliquam cursus, ante libero placerat velit, sed ultricies leo mauris eu odio. Vestibulum tempor interdum gravida. Etiam tincidunt turpis nec pellentesque eleifend. Etiam imperdiet mauris at facilisis congue. Ut dictum efficitur odio, et vulputate leo aliquet a. Aliquam erat volutpat. Donec congue vestibulum tellus, non pretium justo pulvinar vel. Nam gravida tortor eu scelerisque cursus. Aenean ultrices, augue nec tincidunt ullamcorper, dolor magna volutpat velit, vitae iaculis lorem sapien in libero.

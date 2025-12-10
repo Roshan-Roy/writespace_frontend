@@ -2,42 +2,35 @@ import { Outlet } from "react-router"
 import PublicNavbar from "../navbars/PublicNavbar"
 import PrivateNavbar from "../navbars/PrivateNavbar"
 import { useAuth } from "@/contexts/AuthContext"
-import { useState, useRef, useEffect } from "react"
+import { createContext, useContext, useState } from "react"
 import SidebarWrapper from "../sidebarWrapper/SidebarWrapper"
+
+const LayoutContext = createContext()
+export const useLayout = () => useContext(LayoutContext)
 
 const MainLayout = () => {
   const { isAuthenticated } = useAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const ableToCloseRef = useRef(false)
 
-  useEffect(() => {
-    ableToCloseRef.current = window.innerWidth >= 1024
+  if (!isAuthenticated) {
+    return (
+      <>
+        <PublicNavbar />
+        <Outlet />
+      </>
+    )
+  }
 
-    const handleResize = () => {
-      const isLarge = window.innerWidth >= 1024
-      if (!isLarge && ableToCloseRef.current) {
-        setSidebarOpen(false)
-        ableToCloseRef.current = false
-      }
-      if (isLarge) {
-        ableToCloseRef.current = true
-      }
-    };
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
-
-  if (isAuthenticated) return (
-    <>
-      <PrivateNavbar setSidebarOpen={setSidebarOpen} />
-      <SidebarWrapper setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen}><Outlet /></SidebarWrapper>
-    </>
-  )
   return (
-    <>
-      <PublicNavbar />
-      <Outlet />
-    </>
+    <LayoutContext.Provider value={{
+      sidebarOpen,
+      setSidebarOpen
+    }}>
+      <PrivateNavbar />
+      <SidebarWrapper>
+        <Outlet />
+      </SidebarWrapper>
+    </LayoutContext.Provider>
   )
 }
 

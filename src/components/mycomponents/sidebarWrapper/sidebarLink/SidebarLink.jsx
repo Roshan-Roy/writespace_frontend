@@ -1,6 +1,12 @@
 import { NavLink } from "react-router";
+import { useLayout } from "../../mainLayout/MainLayout"
 
-const SidebarLink = ({ label, route, icon: Icon, handleCloseSidebar }) => {
+const SidebarLink = ({ label, route, icon: Icon }) => {
+    const { setSidebarOpen } = useLayout()
+
+    const handleCloseSidebar = () => {
+        setSidebarOpen(false)
+    }
     return (
         <>
             <NavLink
