@@ -8,6 +8,8 @@ import ResetPassword from "./pages/ResetPassword"
 import VerifyEmail from "./pages/VerifyEmail"
 import { AuthContextProvider } from "./contexts/AuthContext"
 import LandingPageOrHome from "./pages/LandingPageOrHome"
+import Saved from "./pages/Saved"
+import Profile from "./pages/Profile"
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPageOrHome /> },
       { path: "about", element: <About /> },
+      { path: "saved", element: <Saved /> },
+      { path: "profile", element: <Profile /> },
     ]
   },
   { path: "forgot_password", element: <ForgotPassword /> },

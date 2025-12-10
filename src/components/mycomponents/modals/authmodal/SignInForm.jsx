@@ -40,7 +40,6 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
             const response = await axios.post(`${API_URL}token/`, data)
             login(response.data)
             setOpenModal(null)
-            toast.custom(t => <CustomToast t={t} message="Signed in successfully!" icon={CircleCheck} iconStyles="text-green-500" />)
         } catch (e) {
             const status = e.response?.status
             if (status === 401) {

@@ -2,7 +2,7 @@ import * as z from "zod"
 
 const minErrorMsg = (field, n) => `${field} must be at least ${n} characters long`;
 const maxErrorMsg = (field, n) => `${field} cannot exceed ${n} characters`;
-const usernameRegex = /^[a-zA-Z0-9_]+$/;
+const usernameRegex = /^[a-z0-9_]+$/;
 
 export const formatErrors = (errors) => {
     return errors.reduce((acc, issue) => {
@@ -17,7 +17,7 @@ export const signupSchema = z.object({
         .string()
         .min(3, minErrorMsg("Username", 3))
         .max(20, maxErrorMsg("Username", 20))
-        .regex(usernameRegex, "Username can only contain letters, numbers, and underscores"),
+        .regex(usernameRegex, "Username can only contain lowercase letters, numbers, and underscores"),
     email: z.email("Please enter a valid email address"),
     password: z
         .string()
