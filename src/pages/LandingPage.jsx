@@ -2,7 +2,7 @@ import { Info } from "lucide-react"
 import { Link } from "react-router"
 import { Button } from "@/components/ui/button"
 import SwitchThemeButtonHomeAbout from "@/components/mycomponents/switchThemeButtons/SwitchThemeButtonHomeAbout"
-import { AuthModal } from "@/components/mycomponents/modals/authmodal/AuthModal"
+import { AuthModal } from "@/components/mycomponents/modals/authModal/AuthModal"
 import { useState } from "react"
 
 const LandingPage = () => {
