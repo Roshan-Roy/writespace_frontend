@@ -1,11 +1,11 @@
 import { NavLink } from "react-router";
 
-const SidebarLink = ({ label, route, icon: Icon, handleCloseNavbar }) => {
+const SidebarLink = ({ label, route, icon: Icon, handleCloseSidebar }) => {
     return (
         <>
             <NavLink
                 to={route}
-                onClick={handleCloseNavbar}
+                onClick={handleCloseSidebar}
                 className={({ isActive }) =>
                     `lg:hidden flex box-border items-center px-5.5 gap-4 border-l-2 ${isActive
                         ? "border-foreground text-foreground"

@@ -7,7 +7,7 @@ import SidebarWrapper from "../sidebarWrapper/SidebarWrapper"
 
 const MainLayout = () => {
   const { isAuthenticated } = useAuth()
-  const [open, setOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const ableToCloseRef = useRef(false)
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const MainLayout = () => {
     const handleResize = () => {
       const isLarge = window.innerWidth >= 1024
       if (!isLarge && ableToCloseRef.current) {
-        setOpen(false)
+        setSidebarOpen(false)
         ableToCloseRef.current = false
       }
       if (isLarge) {
@@ -29,8 +29,8 @@ const MainLayout = () => {
 
   if (isAuthenticated) return (
     <>
-      <PrivateNavbar setOpen={setOpen} />
-      <SidebarWrapper setOpen={setOpen} open={open}><Outlet /></SidebarWrapper>
+      <PrivateNavbar setSidebarOpen={setSidebarOpen} />
+      <SidebarWrapper setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen}><Outlet /></SidebarWrapper>
     </>
   )
   return (
