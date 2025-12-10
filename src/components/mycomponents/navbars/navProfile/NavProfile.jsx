@@ -33,6 +33,20 @@ const NavProfile = () => {
         }
     }, [])
 
+    useEffect(() => {
+        if (!profileOpen) return
+
+        const handleScroll = () => {
+            setProfileOpen(false)
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true })
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+        }
+    }, [profileOpen])
+
     return (
         <div ref={profileDropDownRef} className="relative w-8.5 h-8.5">
             <div
