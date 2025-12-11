@@ -12,7 +12,7 @@ const PrivateNavbar = () => {
 
   return (
     <>
-      <div className="fixed z-50 top-0 w-full h-14 border-b flex bg-background px-8 justify-between">
+      <div className="fixed z-50 top-0 w-full h-14 border-b flex bg-background pl-8 pr-6 lg:pr-8 justify-between">
         <div className="flex items-center gap-4">
           <Menu className="text-muted-foreground" onClick={handleToggleSidebar} />
           <Link to="/" className="font-logo text-3xl">Writespace</Link>

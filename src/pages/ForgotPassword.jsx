@@ -11,7 +11,7 @@ import toast from "react-hot-toast"
 import CustomToast from "@/components/mycomponents/toast/CustomToast"
 import { CircleX, MailCheck } from "lucide-react"
 import axios from "axios"
-import { API_URL } from "@/lib/api"
+import { API_URL } from "@/lib/urls"
 
 const ForgotPassword = () => {
   const [data, setData] = useState({

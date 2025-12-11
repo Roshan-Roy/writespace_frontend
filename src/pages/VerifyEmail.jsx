@@ -2,7 +2,7 @@ import AuthPageWrapper from "@/components/mycomponents/authPageWrapper/AuthPageW
 import { useParams, Link } from "react-router"
 import { useEffect, useState, useRef } from "react"
 import axios from "axios"
-import { API_URL } from "@/lib/api"
+import { API_URL } from "@/lib/urls"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 import { Spinner } from "@/components/ui/spinner"
 import { Link2Off, BadgeCheck } from "lucide-react"

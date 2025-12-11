@@ -2,7 +2,7 @@ import AuthPageWrapper from "@/components/mycomponents/authPageWrapper/AuthPageW
 import { useParams, Link } from "react-router"
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { API_URL } from "@/lib/api"
+import { API_URL } from "@/lib/urls"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
