@@ -18,32 +18,26 @@ const NavProfile = () => {
     }
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (profileDropDownRef.current && !profileDropDownRef.current.contains(event.target)) {
-                setProfileOpen(false)
-            }
-        }
-
-        document.addEventListener("mousedown", handleClickOutside)
-        document.addEventListener("touchstart", handleClickOutside)
-
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside)
-            document.removeEventListener("touchstart", handleClickOutside)
-        }
-    }, [])
-
-    useEffect(() => {
         if (!profileOpen) return
 
         const handleScroll = () => {
             setProfileOpen(false)
         }
 
+        const handleClickOutside = (event) => {
+            if (profileDropDownRef.current && !profileDropDownRef.current.contains(event.target)) {
+                setProfileOpen(false)
+            }
+        }
+
         window.addEventListener("scroll", handleScroll, { passive: true })
+        document.addEventListener("mousedown", handleClickOutside)
+        document.addEventListener("touchstart", handleClickOutside)
 
         return () => {
             window.removeEventListener("scroll", handleScroll)
+            document.removeEventListener("mousedown", handleClickOutside)
+            document.removeEventListener("touchstart", handleClickOutside)
         }
     }, [profileOpen])
 
