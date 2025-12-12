@@ -31,11 +31,6 @@ const NavProfile = () => {
     const handleCloseProfile = () => {
         setProfileOpen(false)
     }
-    const handleReloadData = () => {
-        setLoading(true)
-        setError(false)
-        getProfileData()
-    }
     const getProfileData = async () => {
         try {
             const response = await axios.get(`${API_URL}my_profile/`, {
@@ -93,7 +88,7 @@ const NavProfile = () => {
             />
 
             <div className={`absolute bg-popover top-full translate-y-2.5 -right-2 transition-all shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] rounded-md dark:shadow-none w-58 sm:w-64 ${profileOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}>
-                {loading ? <NavProfileDropDownSkeleton /> : error ? <NavProfileDropDownError retryFn={handleReloadData} /> : (
+                {loading ? <NavProfileDropDownSkeleton /> : error ? <NavProfileDropDownError /> : (
                     <>
                         <Link className="flex items-center gap-4 py-4 px-6 text-foreground/80 hover:text-foreground" onClick={handleCloseProfile} to="/profile">
                             <img className="w-12 h-12 rounded-full" src={data?.profile.image ? `${MEDIA_URL}${data.profile.image}` : "/images/default_avatar.jpg"} alt="profile picture" />
