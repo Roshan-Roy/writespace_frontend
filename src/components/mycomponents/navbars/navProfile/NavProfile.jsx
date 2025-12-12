@@ -4,16 +4,19 @@ import axios from "axios"
 import { MEDIA_URL, API_URL } from "@/lib/urls"
 import { Link } from "react-router"
 import NavProfileDropDownSkeleton from "./NavProfileDropDownSkeleton"
+import NavProfileDropDownError from "./NavProfileDropDownError"
 import { Bell, SquarePen } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import ToggleThemeButtonNavbar from "../../switchThemeButtons/ToggleThemeButtonNavbar"
 import SignoutButton from "../../signoutButton/SignoutButton"
+import { useAuth } from "@/contexts/AuthContext"
 
 const NavProfile = () => {
+    const { auth } = useAuth()
     const { setSidebarOpen } = useLayout()
     const [profileOpen, setProfileOpen] = useState(false)
     const profileDropDownRef = useRef(null)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [data, setData] = useState(null)
 
@@ -27,6 +30,25 @@ const NavProfile = () => {
     }
     const handleCloseProfile = () => {
         setProfileOpen(false)
+    }
+    const handleReloadData = () => {
+        setLoading(true)
+        setError(false)
+        getProfileData()
+    }
+    const getProfileData = async () => {
+        try {
+            const response = await axios.get(`${API_URL}my_profile/`, {
+                headers: {
+                    Authorization: `Bearer ${auth.access}`,
+                }
+            })
+            setData(response.data)
+        } catch (e) {
+            setError(true)
+        } finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -54,7 +76,7 @@ const NavProfile = () => {
     }, [profileOpen])
 
     useEffect(() => {
-
+        getProfileData()
     }, [])
 
     return (
@@ -71,12 +93,12 @@ const NavProfile = () => {
             />
 
             <div className={`absolute bg-popover top-full translate-y-2.5 -right-2 transition-all shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] rounded-md dark:shadow-none w-58 sm:w-64 ${profileOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}>
-                {loading ? <NavProfileDropDownSkeleton /> : (
+                {loading ? <NavProfileDropDownSkeleton /> : error ? <NavProfileDropDownError retryFn={handleReloadData} /> : (
                     <>
                         <Link className="flex items-center gap-4 py-4 px-6 text-foreground/80 hover:text-foreground" onClick={handleCloseProfile} to="/profile">
                             <img className="w-12 h-12 rounded-full" src={data?.profile.image ? `${MEDIA_URL}${data.profile.image}` : "/images/default_avatar.jpg"} alt="profile picture" />
                             <div className="flex-1 flex flex-col gap-1 min-w-0">
-                                <span className="truncate">Roshan</span>
+                                <span className="truncate">{data.username}</span>
                                 <span className="text-xs">View profile</span>
                             </div>
                         </Link>
@@ -91,7 +113,7 @@ const NavProfile = () => {
                         <Separator className="mt-4" />
                         <ToggleThemeButtonNavbar />
                         <Separator />
-                        <SignoutButton />
+                        <SignoutButton email={data.email} />
                     </>
                 )}
             </div>

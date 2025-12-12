@@ -12,6 +12,7 @@ import Saved from "./pages/Saved"
 import Profile from "./pages/Profile"
 import Write from "./pages/Write"
 import Notifications from "./pages/Notifications"
+import ProtectedRoutes from "./components/mycomponents/protectedRoutes/ProtectedRoutes"
 
 const router = createBrowserRouter([
   {
@@ -20,10 +21,15 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPageOrHome /> },
       { path: "about", element: <About /> },
-      { path: "saved", element: <Saved /> },
-      { path: "profile", element: <Profile /> },
-      { path: "write", element: <Write /> },
-      { path: "notifications", element: <Notifications /> },
+      {
+        element: <ProtectedRoutes />,
+        children: [
+          { path: "saved", element: <Saved /> },
+          { path: "profile", element: <Profile /> },
+          { path: "write", element: <Write /> },
+          { path: "notifications", element: <Notifications /> },
+        ]
+      }
     ]
   },
   { path: "forgot_password", element: <ForgotPassword /> },
