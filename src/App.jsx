@@ -10,6 +10,8 @@ import { AuthContextProvider } from "./contexts/AuthContext"
 import LandingPageOrHome from "./pages/LandingPageOrHome"
 import Saved from "./pages/Saved"
 import Profile from "./pages/Profile"
+import Write from "./pages/Write"
+import Notifications from "./pages/Notifications"
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,8 @@ const router = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "saved", element: <Saved /> },
       { path: "profile", element: <Profile /> },
+      { path: "write", element: <Write /> },
+      { path: "notifications", element: <Notifications /> },
     ]
   },
   { path: "forgot_password", element: <ForgotPassword /> },
