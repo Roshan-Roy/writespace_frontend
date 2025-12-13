@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { useLayout } from "../../mainLayout/MainLayout"
-import axios from "axios"
-import { MEDIA_URL, API_URL } from "@/lib/urls"
+import { MEDIA_URL } from "@/lib/urls"
 import { Link } from "react-router"
 import NavProfileDropDownSkeleton from "./NavProfileDropDownSkeleton"
 import NavProfileDropDownError from "./NavProfileDropDownError"
@@ -10,6 +9,7 @@ import { Separator } from "@/components/ui/separator"
 import ToggleThemeButtonNavbar from "../../switchThemeButtons/ToggleThemeButtonNavbar"
 import SignoutButton from "../../signoutButton/SignoutButton"
 import { useAuth } from "@/contexts/AuthContext"
+import api from "@/api/api"
 
 const NavProfile = () => {
     const { auth } = useAuth()
@@ -33,11 +33,7 @@ const NavProfile = () => {
     }
     const getProfileData = async () => {
         try {
-            const response = await axios.get(`${API_URL}my_profile/`, {
-                headers: {
-                    Authorization: `Bearer ${auth.access}`,
-                }
-            })
+            const response = await api.get("my_profile/")
             setData(response.data)
         } catch (e) {
             setError(true)
