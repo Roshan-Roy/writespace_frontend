@@ -1,11 +1,10 @@
 import maskEmail from "@/lib/maskEmail"
-import axios from "axios"
 import { useState } from "react"
 import { useAuth } from "@/contexts/AuthContext"
-import { API_URL } from "@/lib/urls"
 import toast from "react-hot-toast"
 import { CircleX } from "lucide-react"
 import CustomToast from "../toast/CustomToast"
+import api from "@/api/api"
 
 const SignoutButton = ({ email }) => {
     const { auth, logout } = useAuth()
@@ -15,12 +14,8 @@ const SignoutButton = ({ email }) => {
         if (loading) return
         try {
             setLoading(true)
-            await axios.post(`${API_URL}signout/`, {
+            await api.post("signout/", {
                 refresh: auth.refresh
-            }, {
-                headers: {
-                    Authorization: `Bearer ${auth.access}`,
-                },
             })
             logout()
         } catch (e) {

@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, useContext } from "react"
-import { setAccessToken, setLogoutHandler } from "@/api/api"
+import { setTokens, clearTokens, setLoginHandler, setLogoutHandler } from "@/api/api"
 
 const AuthContext = createContext({
     isAuthenticated: false,
@@ -24,14 +24,15 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         if (auth) {
             localStorage.setItem("auth", JSON.stringify(auth))
-            setAccessToken(auth.access)
+            setTokens(auth.access, auth.refresh)
         } else {
             localStorage.removeItem("auth")
-            setAccessToken(null)
+            clearTokens()
         }
     }, [auth])
 
     useEffect(() => {
+        setLoginHandler(login)
         setLogoutHandler(logout)
     }, [])
 
