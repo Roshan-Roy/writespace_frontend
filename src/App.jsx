@@ -9,10 +9,13 @@ import VerifyEmail from "./pages/VerifyEmail"
 import { AuthContextProvider } from "./contexts/AuthContext"
 import LandingPageOrHome from "./pages/LandingPageOrHome"
 import Saved from "./pages/Saved"
-import Profile from "./pages/Profile"
+import MyProfile from "./pages/MyProfile"
 import Write from "./pages/Write"
 import Notifications from "./pages/Notifications"
 import ProtectedRoutes from "./components/mycomponents/protectedRoutes/ProtectedRoutes"
+import MyProfileHome from "./pages/MyProfileHome"
+import MyProfileSaved from "./pages/MyProfileSaved"
+import MyProfileAbout from "./pages/MyProfileAbout"
 
 const router = createBrowserRouter([
   {
@@ -25,9 +28,17 @@ const router = createBrowserRouter([
         element: <ProtectedRoutes />,
         children: [
           { path: "saved", element: <Saved /> },
-          { path: "profile", element: <Profile /> },
+          {
+            path: "profile",
+            element: <MyProfile />,
+            children: [
+              { index: true, element: <MyProfileHome /> },
+              { path: "saved", element: <MyProfileSaved /> },
+              { path: "about", element: <MyProfileAbout /> },
+            ]
+          },
           { path: "write", element: <Write /> },
-          { path: "notifications", element: <Notifications /> },
+          { path: "notifications", element: <Notifications /> }
         ]
       }
     ]
