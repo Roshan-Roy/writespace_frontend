@@ -8,11 +8,9 @@ import { Bell, SquarePen } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import ToggleThemeButtonNavbar from "../../switchThemeButtons/ToggleThemeButtonNavbar"
 import SignoutButton from "../../signoutButton/SignoutButton"
-import { useAuth } from "@/contexts/AuthContext"
 import api from "@/api/api"
 
 const NavProfile = () => {
-    const { auth } = useAuth()
     const { setSidebarOpen } = useLayout()
     const [profileOpen, setProfileOpen] = useState(false)
     const profileDropDownRef = useRef(null)

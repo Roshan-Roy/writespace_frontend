@@ -13,6 +13,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { resetPasswordSchema } from "@/lib/validation"
 import toast from "react-hot-toast"
 import CustomToast from "@/components/mycomponents/toast/CustomToast"
+import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
 
 const ResetPassword = () => {
     const { uidb64, token } = useParams()
@@ -75,7 +76,7 @@ const ResetPassword = () => {
         handleCheckLink()
     }, [])
 
-    if (pageLoading) return <div className="w-full h-dvh flex justify-center items-center"><Spinner className="size-10 sm:size-12" /></div>
+    if (pageLoading) return <LoadingPage />
     if (pageError) return <ErrorPage retryFn={handleReloadData} />
     return (
         <AuthPageWrapper>

@@ -4,34 +4,34 @@ import { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { API_URL } from "@/lib/urls"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
-import { Spinner } from "@/components/ui/spinner"
 import { Link2Off, BadgeCheck } from "lucide-react"
+import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
 
 const VerifyEmail = () => {
   const { uidb64, token } = useParams()
-  const [pageLoading, setPageLoading] = useState(true)
-  const [pageError, setPageError] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
   const [validLink, setValidLink] = useState(true)
   const hasFetched = useRef(false)
 
   const verifyEmail = async () => {
     try {
       await axios.get(`${API_URL}verify_email/${uidb64}/${token}/`)
-      setPageLoading(false)
+      setLoading(false)
     } catch (e) {
       const status = e.response?.status
       if (status === 400) {
         setValidLink(false)
       } else {
-        setPageError(true)
+        setError(true)
       }
     } finally {
-      setPageLoading(false)
+      setLoading(false)
     }
   }
   const handleReloadData = () => {
-    setPageError(false)
-    setPageLoading(true)
+    setError(false)
+    setLoading(true)
     verifyEmail()
   }
 
@@ -42,8 +42,8 @@ const VerifyEmail = () => {
     }
   }, [])
 
-  if (pageLoading) return <div className="w-full h-dvh flex justify-center items-center"><Spinner className="size-10 sm:size-12" /></div>
-  if (pageError) return <ErrorPage retryFn={handleReloadData} />
+  if (loading) return <LoadingPage />
+  if (error) return <ErrorPage retryFn={handleReloadData} />
   return (
     <AuthPageWrapper>
       {validLink ? (
