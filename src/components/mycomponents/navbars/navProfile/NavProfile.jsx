@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { useLayout } from "../../mainLayout/MainLayout"
+import { useLayout } from "@/contexts/LayoutContext"
 import { MEDIA_URL } from "@/lib/urls"
 import { Link } from "react-router"
 import NavProfileDropDownSkeleton from "./NavProfileDropDownSkeleton"
@@ -85,21 +85,21 @@ const NavProfile = () => {
                 {loading ? <NavProfileDropDownSkeleton /> : error ? <NavProfileDropDownError /> : (
                     <>
                         <Link className="flex items-center gap-4 py-4 px-6 text-foreground/80 hover:text-foreground" onClick={handleCloseProfile} to="/profile">
-                            <img className="w-12 h-12 rounded-full" src={data?.profile.image ? `${MEDIA_URL}${data.profile.image}` : "/images/default_avatar.jpg"} alt="profile picture" />
+                            <img className="w-12 h-12 rounded-full" src={data.profile.image ? `${MEDIA_URL}${data.profile.image}` : "/images/default_avatar.jpg"} alt="profile picture" />
                             <div className="flex-1 flex flex-col gap-1 min-w-0">
                                 <span className="truncate">{data.username}</span>
                                 <span className="text-xs">View profile</span>
                             </div>
                         </Link>
-                        <Link className="flex gap-4 items-center px-6 py-2 text-foreground/70 hover:text-foreground" onClick={handleCloseProfile} to="/write">
+                        <Link className="lg:hidden flex gap-4 items-center px-6 py-2 text-foreground/70 hover:text-foreground" onClick={handleCloseProfile} to="/write">
                             <SquarePen />
                             <span>Write</span>
                         </Link>
-                        <Link className="flex gap-4 items-center px-6 py-2 text-foreground/70 hover:text-foreground" onClick={handleCloseProfile} to="/notifications">
+                        <Link className="lg:hidden flex gap-4 items-center px-6 py-2 text-foreground/70 hover:text-foreground" onClick={handleCloseProfile} to="/notifications">
                             <Bell />
                             <span>Notifications</span>
                         </Link>
-                        <Separator className="mt-4" />
+                        <Separator className="mt-4 lg:mt-0" />
                         <ToggleThemeButtonNavbar />
                         <Separator />
                         <SignoutButton email={data.email} />

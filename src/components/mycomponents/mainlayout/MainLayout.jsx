@@ -2,15 +2,12 @@ import { Outlet } from "react-router"
 import PublicNavbar from "../navbars/PublicNavbar"
 import PrivateNavbar from "../navbars/PrivateNavbar"
 import { useAuth } from "@/contexts/AuthContext"
-import { createContext, useContext, useState } from "react"
+import { LayoutProvider } from "@/contexts/LayoutContext"
 import SidebarWrapper from "../sidebarWrapper/SidebarWrapper"
 
-const LayoutContext = createContext()
-export const useLayout = () => useContext(LayoutContext)
 
 const MainLayout = () => {
   const { isAuthenticated } = useAuth()
-  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   if (!isAuthenticated) {
     return (
@@ -22,15 +19,12 @@ const MainLayout = () => {
   }
 
   return (
-    <LayoutContext.Provider value={{
-      sidebarOpen,
-      setSidebarOpen
-    }}>
+    <LayoutProvider>
       <PrivateNavbar />
       <SidebarWrapper>
         <Outlet />
       </SidebarWrapper>
-    </LayoutContext.Provider>
+    </LayoutProvider>
   )
 }
 

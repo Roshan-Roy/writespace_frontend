@@ -1,6 +1,6 @@
 import SidebarLink from "./sidebarLink/SidebarLink"
 import sidebarLinks from "@/constants/sidebarLinks"
-import { useLayout } from "../mainLayout/MainLayout"
+import { useLayout } from "@/contexts/LayoutContext"
 import { useEffect } from "react"
 
 const SidebarWrapper = ({ children }) => {

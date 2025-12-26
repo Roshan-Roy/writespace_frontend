@@ -8,7 +8,7 @@ const AuthContext = createContext({
     logout: () => { }
 })
 
-export const AuthContextProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(() => {
         const storedAuth = localStorage.getItem("auth")
         return storedAuth ? JSON.parse(storedAuth) : null
@@ -42,5 +42,10 @@ export const AuthContextProvider = ({ children }) => {
 }
 
 export const useAuth = () => {
-    return useContext(AuthContext)
+    const context = useContext(AuthContext)
+
+    if (!context)
+        throw new Error("useAuth must be used within a AuthProvider")
+
+    return context
 }

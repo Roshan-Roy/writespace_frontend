@@ -1,11 +1,11 @@
-import { Link } from "react-router"
-import { Menu } from "lucide-react"
+import { Link, NavLink } from "react-router"
+import { Menu, Bell, SquarePen } from "lucide-react"
 import NavProfile from "./navProfile/NavProfile"
-import { useLayout } from "../mainLayout/MainLayout"
+import { useLayout } from "@/contexts/LayoutContext"
 
 const PrivateNavbar = () => {
   const { setSidebarOpen } = useLayout()
-  
+
   const handleToggleSidebar = () => {
     setSidebarOpen(e => !e)
   }
@@ -17,7 +17,14 @@ const PrivateNavbar = () => {
           <Menu className="text-muted-foreground" onClick={handleToggleSidebar} />
           <Link to="/" className="font-logo text-3xl">Writespace</Link>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center gap-8">
+          <NavLink to="/write" className={({ isActive }) => `hidden lg:flex items-center gap-2 ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+            <SquarePen />
+            <span className="text-sm">Write</span>
+          </NavLink>
+          <NavLink to="/notifications" className={({ isActive }) => `hidden lg:block ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+            <Bell />
+          </NavLink>
           <NavProfile />
         </div>
       </div>
