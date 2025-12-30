@@ -1,8 +1,16 @@
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
 import { XIcon } from "lucide-react"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const Write = () => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -16,21 +24,37 @@ const Write = () => {
 
   if (modalOpen) {
     return (
-      <div className="py-4">
-        <div className="w-17/20 max-w-4xl mx-auto py-6 relative">
-          <XIcon onClick={handleCloseModal} className="absolute top-0 right-0 opacity-70 transition-opacity hover:opacity-100 text-muted-foreground" />
-          <div>
-            <span className="font-semibold mb-3 inline-block">Cover Image</span>
-            <label htmlFor="preview_image" className="flex justify-center items-center h-44 p-10 bg-muted text-bg-muted-foreground rounded-sm mb-3">
-              <span className="leading-relaxed text-xs text-center">Choose a high-quality image that captures the essence of your story (optional).</span>
+      <div className="py-4 sm:pt-6 lg:pb-6">
+        <div className="w-17/20 max-w-4xl mx-auto py-6 sm:pt-12 relative flex flex-col sm:flex-row gap-4 sm:gap-6">
+          <XIcon onClick={handleCloseModal} className="absolute top-0 right-0 opacity-70 transition-opacity hover:opacity-100 text-muted-foreground cursor-pointer" />
+          <div className="sm:flex-1">
+            <span className="font-semibold mb-2.5 inline-block">Cover Image</span>
+            <label htmlFor="preview_image" className="flex justify-center items-center h-46 sm:h-50 p-10 sm:p-16 bg-muted text-bg-muted-foreground rounded-sm mb-3">
+              <span className="leading-relaxed text-xs lg:text-sm text-center">Choose a high-quality image that captures the essence of your story (optional).</span>
             </label>
             <input type="file" id="preview_image" className="hidden" />
             <Textarea placeholder="Write a preview title" className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent mb-1 text-lg font-bold min-h-0 px-0" />
-            <Textarea placeholder="Write a preview subtitle..." className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent min-h-0 text-sm mb-2 px-0" />
-            <p className="text-xs text-muted-foreground leading-relaxed"><span className="font-semibold">Note :</span> Changes here only affect how your story appears in previews, not the actual content.</p>
+            <Textarea placeholder="Write a preview subtitle..." className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent min-h-0 text-sm mb-2 lg:mb-3 px-0" />
+            <p className="text-xs lg:text-sm text-muted-foreground leading-relaxed"><span className="font-semibold">Note :</span> Changes here only affect how your story appears in previews, not the actual content.</p>
           </div>
-          <div>
-
+          <div className="sm:flex-1">
+            <span className="font-semibold mb-2.5 inline-block">Topic</span>
+            <Select>
+              <SelectTrigger className="data-[size=default]:h-auto w-full py-2.5 px-4">
+                <SelectValue placeholder="Select a fruit" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Fruits</SelectLabel>
+                  <SelectItem value="apple">Apple</SelectItem>
+                  <SelectItem value="banana">Banana</SelectItem>
+                  <SelectItem value="blueberry">Blueberry</SelectItem>
+                  <SelectItem value="grapes">Grapes</SelectItem>
+                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Button variant="success" size="lg" className="w-full mt-6 mb-4">Confirm</Button>
           </div>
         </div>
       </div >
