@@ -23,6 +23,10 @@ const Write = () => {
     topic: ""
   })
 
+  const [confirmBtnDisabled, setConfirmBtnDisabled] = useState(true)
+
+  const publishBtnDisabled = !(data.title && data.content)
+
   const handleInputChange = (value, fieldName) => {
     setData(prevData => ({ ...prevData, [fieldName]: value }))
   }
@@ -106,7 +110,7 @@ const Write = () => {
       </div>
       <div className="absolute flex bottom-0 right-0 h-14 lg:h-16 border-t bg-background w-full items-center justify-center">
         <div className="w-17/20 max-w-4xl flex justify-end">
-          <Button variant="success" size="sm" className="px-8 lg:px-10 lg:h-9 rounded-full" onClick={handleOpenModal}>Publish</Button>
+          <Button variant="success" size="sm" className="px-8 lg:px-10 lg:h-9 rounded-full" onClick={handleOpenModal} disabled={publishBtnDisabled}>Publish</Button>
         </div>
       </div>
     </div>
