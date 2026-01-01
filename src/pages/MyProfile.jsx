@@ -17,7 +17,7 @@ const MyProfile = () => {
   const getMyProfileData = async () => {
     try {
       const response = await api.get("my_profile/")
-      setData(response.data)
+      setData(response.data.data)
     } catch (e) {
       setError(true)
     } finally {

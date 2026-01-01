@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { XIcon } from "lucide-react"
 import {
   Select,
@@ -9,8 +9,11 @@ import {
   SelectItem,
   SelectLabel,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "@/components/ui/select"
+import api from "@/api/api"
+import { CircleAlert } from "lucide-react"
+import trim from "@/lib/trim"
 
 const Write = () => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -22,12 +25,15 @@ const Write = () => {
     cover_image: null,
     topic: ""
   })
+  const [allTopics, setAllTopics] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
-  const [confirmBtnDisabled, setConfirmBtnDisabled] = useState(true)
-
-  const publishBtnDisabled = !(data.title && data.content)
+  const publishBtnDisabled = !(trim(data.title) && trim(data.content))
+  const confirmBtnDisabled = !(trim(data.prev_title) && trim(data.prev_subtitle) && data.topic)
 
   const handleInputChange = (value, fieldName) => {
+    if ((fieldName === "prev_title" && value.length > 100) || (fieldName === "prev_subtitle" && value.length > 140)) return
     setData(prevData => ({ ...prevData, [fieldName]: value }))
   }
   const handleClearCoverImageSelection = () => {
@@ -40,7 +46,20 @@ const Write = () => {
     setModalOpen(false)
   }
 
-  console.log(data)
+  const getAllTopics = async () => {
+    try {
+      const response = await api.get("all_topics/")
+      setAllTopics(response.data.data)
+    } catch (e) {
+      setError(true)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getAllTopics()
+  }, [])
 
   if (modalOpen) {
     return (
@@ -72,28 +91,31 @@ const Write = () => {
               )}
             </div>
             <input type="file" id="preview_image" className="hidden" onChange={e => handleInputChange(e.target.files[0], "cover_image")} />
-            <Textarea placeholder="Write a preview title" className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent mb-1 text-lg font-bold min-h-0 px-0" value={data.prev_title} onChange={e => handleInputChange(e.target.value, "prev_title")} />
-            <Textarea placeholder="Write a preview subtitle..." className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent min-h-0 text-sm mb-2 lg:mb-3 px-0" value={data.prev_subtitle} onChange={e => handleInputChange(e.target.value, "prev_subtitle")} />
+            <Textarea placeholder="Write a preview title" className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent mb-1 text-lg font-bold min-h-0 px-0 break-all" value={data.prev_title} onChange={e => handleInputChange(e.target.value, "prev_title")} />
+            <Textarea placeholder="Write a preview subtitle..." className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent min-h-0 text-sm mb-2 lg:mb-3 px-0 break-all" value={data.prev_subtitle} onChange={e => handleInputChange(e.target.value, "prev_subtitle")} />
             <p className="text-xs lg:text-sm text-muted-foreground leading-relaxed"><span className="font-semibold">Note :</span> Changes here only affect how your story appears in previews, not the actual content.</p>
           </div>
           <div className="sm:flex-1">
             <span className="font-semibold mb-2.5 inline-block">Topic</span>
-            <Select>
-              <SelectTrigger className="data-[size=default]:h-auto w-full py-2.5 px-4">
-                <SelectValue placeholder="Select a topic" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Fruits</SelectLabel>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            <Button variant="success" size="lg" className="w-full mt-6 mb-4">Confirm</Button>
+            {error ? (
+              <div className="flex gap-3 justify-center items-center py-2.5 dark:bg-input/30 border border-input rounded-md">
+                <CircleAlert className="size-5" />
+                <span className="text-sm">An error occurred</span>
+              </div>
+            ) : (
+              <Select value={data.topic === "" ? undefined : data.topic} onValueChange={(value) => handleInputChange(value, "topic")}>
+                <SelectTrigger className="data-[size=default]:h-auto w-full py-2.5 px-4" loading={loading}>
+                  <SelectValue placeholder={loading ? "Loading topics..." : "Select a topic"} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Topics</SelectLabel>
+                    {allTopics.map(e => <SelectItem value={e.id} key={e.id}>{e.name}</SelectItem>)}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+            <Button variant="success" size="lg" className="w-full mt-6 mb-4" disabled={confirmBtnDisabled}>Confirm</Button>
           </div>
         </div>
       </div >
