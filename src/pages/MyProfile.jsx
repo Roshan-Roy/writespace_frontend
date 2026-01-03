@@ -39,7 +39,7 @@ const MyProfile = () => {
   if (error) return <ErrorPage className="h-[calc(100dvh-56px)]" retryFn={handleReloadData} />
   return (
     <div className="mx-auto w-17/20 max-w-4xl">
-      <div className="pt-6 pb-6 lg:pt-10 lg:pb-8 flex flex-col gap-4.5 md:gap-0 md:flex-row md:justify-between md:items-center">
+      <div className="pt-6 pb-3 lg:pt-10 lg:pb-5 flex flex-col gap-4.5 md:gap-0 md:flex-row md:justify-between md:items-center">
         <div className="flex items-center gap-6 lg:gap-8">
           <img src={data.profile.image ? `${MEDIA_URL}${data.profile.image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-20 lg:w-28 h-20 lg:h-28 rounded-full" />
           <div className="flex-1 flex flex-col gap-2 lg:gap-4">
@@ -52,11 +52,11 @@ const MyProfile = () => {
         </div>
         <Button variant="outline" className="w-full md:w-60 rounded-2xl">Edit Profile</Button>
       </div>
-      <div className="flex">
+      <div className="flex sticky top-14 bg-background">
         {MyProfileLinks.map(e => {
           return (
             <>
-              <NavLink to={e.route} className={({ isActive }) => `pb-3 lg:pb-4 border-b-2 ${isActive ? "border-b-foreground text-foreground" : "border-muted text-foreground/70 hover:text-foreground"}`} end={e.route === "."}>{e.label}</NavLink>
+              <NavLink to={e.route} className={({ isActive }) => `py-3 lg:py-4 border-b-2 ${isActive ? "border-b-foreground text-foreground" : "border-muted text-foreground/70 hover:text-foreground"}`} end={e.route === "."}>{e.label}</NavLink>
               <div className="border-b-2 border-muted w-6 lg:w-8"></div>
             </>
           )
