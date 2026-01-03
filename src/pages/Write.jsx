@@ -12,7 +12,6 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import api from "@/api/api"
-import trim from "@/lib/trim"
 import toast from "react-hot-toast"
 import CustomToast from "@/components/mycomponents/toast/CustomToast"
 import { useNavigate } from "react-router"
@@ -20,6 +19,7 @@ import { useNavigate } from "react-router"
 const Write = () => {
   const navigate = useNavigate()
   const isActiveRef = useRef(true)
+  const initialPrevFilled = useRef(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [data, setData] = useState({
     title: "",
@@ -32,9 +32,10 @@ const Write = () => {
   const [allTopics, setAllTopics] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const [loadingCreateStory, setLoadingCreateStory] = useState(false)
 
-  const publishBtnDisabled = !(trim(data.title) && trim(data.content))
-  const confirmBtnDisabled = !(trim(data.prev_title) && trim(data.prev_subtitle) && data.topic)
+  const publishBtnDisabled = !(data.title && data.content)
+  const confirmBtnDisabled = !(data.prev_title && data.prev_subtitle && data.topic)
   const limits = { prev_title: 100, prev_subtitle: 140 }
 
   const handleInputChange = (value, fieldName) => {
@@ -66,6 +67,7 @@ const Write = () => {
       { duration: Infinity }
     )
     setModalOpen(false)
+    setLoadingCreateStory(true)
     try {
       const formData = new FormData()
 
@@ -108,6 +110,7 @@ const Write = () => {
         ),
         { id: toastId, duration: 4000 }
       )
+      setLoadingCreateStory(false)
     }
   }
 
@@ -123,8 +126,9 @@ const Write = () => {
   }
 
   useEffect(() => {
-    if (modalOpen) {
+    if (modalOpen && !initialPrevFilled.current) {
       setData(prevData => ({ ...prevData, prev_title: prevData.title.slice(0, limits.prev_title), prev_subtitle: prevData.content.slice(0, limits.prev_subtitle) }))
+      initialPrevFilled.current = true
     }
   }, [modalOpen])
 
@@ -178,7 +182,7 @@ const Write = () => {
                 <span className="text-sm">An error occurred</span>
               </div>
             ) : (
-              <Select value={data.topic === "" ? undefined : data.topic} onValueChange={(value) => handleInputChange(value, "topic")}>
+              <Select value={data.topic} onValueChange={(value) => handleInputChange(value, "topic")}>
                 <SelectTrigger className="data-[size=default]:h-auto w-full py-2.5 px-4" loading={loading}>
                   <SelectValue placeholder={loading ? "Loading topics..." : "Select a topic"} />
                 </SelectTrigger>
@@ -207,7 +211,7 @@ const Write = () => {
       </div>
       <div className="absolute flex bottom-0 right-0 h-14 lg:h-16 border-t bg-background w-full items-center justify-center">
         <div className="w-17/20 max-w-4xl flex justify-end">
-          <Button variant="success" size="sm" className="px-8 lg:px-10 lg:h-9 rounded-full" onClick={handleOpenModal} disabled={publishBtnDisabled}>Publish</Button>
+          <Button variant="success" size="sm" className="px-8 lg:px-10 lg:h-9 rounded-full" onClick={handleOpenModal} disabled={publishBtnDisabled || loadingCreateStory}>Publish</Button>
         </div>
       </div>
     </div>
