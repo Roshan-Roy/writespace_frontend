@@ -6,7 +6,7 @@ const StoryCard = () => {
         <div className="border-b py-8">
             <div className="flex items-center gap-2.5">
                 <img src="/images/default_avatar.jpg" className="w-6 h-6 rounded-full" alt="profile picture" />
-                <span>By roshan</span>
+                <span><span className="text-foreground/70">By</span> roshan</span>
             </div>
             <div className="flex gap-5 mt-4 mb-6">
                 <div className="flex-1">
@@ -27,7 +27,7 @@ const StoryCard = () => {
                         <span>150</span>
                     </div>
                 </div>
-                <FaRegBookmark className="text-xl"/>
+                <FaRegBookmark className="text-xl" />
             </div>
         </div>
     )
