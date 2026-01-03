@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { useEffect, useState } from "react"
-import { XIcon } from "lucide-react"
+import { useEffect, useState, useRef } from "react"
+import { CircleCheck, CircleX, LoaderIcon, XIcon, CircleAlert } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -12,10 +12,14 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import api from "@/api/api"
-import { CircleAlert } from "lucide-react"
 import trim from "@/lib/trim"
+import toast from "react-hot-toast"
+import CustomToast from "@/components/mycomponents/toast/CustomToast"
+import { useNavigate } from "react-router"
 
 const Write = () => {
+  const navigate = useNavigate()
+  const isActiveRef = useRef(true)
   const [modalOpen, setModalOpen] = useState(false)
   const [data, setData] = useState({
     title: "",
@@ -31,10 +35,14 @@ const Write = () => {
 
   const publishBtnDisabled = !(trim(data.title) && trim(data.content))
   const confirmBtnDisabled = !(trim(data.prev_title) && trim(data.prev_subtitle) && data.topic)
+  const limits = { prev_title: 100, prev_subtitle: 140 }
 
   const handleInputChange = (value, fieldName) => {
-    if ((fieldName === "prev_title" && value.length > 100) || (fieldName === "prev_subtitle" && value.length > 140)) return
-    setData(prevData => ({ ...prevData, [fieldName]: value }))
+    const max = limits[fieldName]
+    setData(prevData => ({
+      ...prevData,
+      [fieldName]: max ? value.slice(0, max) : value,
+    }))
   }
   const handleClearCoverImageSelection = () => {
     setData(prevData => ({ ...prevData, cover_image: null }))
@@ -44,6 +52,63 @@ const Write = () => {
   }
   const handleCloseModal = () => {
     setModalOpen(false)
+  }
+  const createStory = async () => {
+    const toastId = toast.custom(
+      t => (
+        <CustomToast
+          t={t}
+          icon={LoaderIcon}
+          iconStyles="animate-spin"
+          message="Publishing story..."
+        />
+      ),
+      { duration: Infinity }
+    )
+    setModalOpen(false)
+    try {
+      const formData = new FormData()
+
+      formData.append("title", data.title)
+      formData.append("content", data.content)
+      formData.append("prev_title", data.prev_title)
+      formData.append("prev_subtitle", data.prev_subtitle)
+      formData.append("topic", data.topic)
+
+      if (data.cover_image) {
+        formData.append("cover_image", data.cover_image)
+      }
+
+      await api.post("stories/", formData)
+
+      toast.custom(
+        t => (
+          <CustomToast
+            t={t}
+            icon={CircleCheck}
+            iconStyles="text-green-500"
+            message="Story published successfully!"
+          />
+        ),
+        { id: toastId, duration: 4000 }
+      )
+      if (isActiveRef.current) {
+        navigate("/")
+      }
+
+    } catch (e) {
+      toast.custom(
+        t => (
+          <CustomToast
+            t={t}
+            icon={CircleX}
+            iconStyles="text-red-500"
+            message="An error occurred"
+          />
+        ),
+        { id: toastId, duration: 4000 }
+      )
+    }
   }
 
   const getAllTopics = async () => {
@@ -58,7 +123,17 @@ const Write = () => {
   }
 
   useEffect(() => {
+    if (modalOpen) {
+      setData(prevData => ({ ...prevData, prev_title: prevData.title.slice(0, limits.prev_title), prev_subtitle: prevData.content.slice(0, limits.prev_subtitle) }))
+    }
+  }, [modalOpen])
+
+  useEffect(() => {
+    isActiveRef.current = true
     getAllTopics()
+    return () => {
+      isActiveRef.current = false
+    }
   }, [])
 
   if (modalOpen) {
@@ -115,7 +190,7 @@ const Write = () => {
                 </SelectContent>
               </Select>
             )}
-            <Button variant="success" size="lg" className="w-full mt-6 mb-4" disabled={confirmBtnDisabled}>Confirm</Button>
+            <Button variant="success" size="lg" className="w-full mt-6 mb-4" disabled={confirmBtnDisabled} onClick={createStory}>Confirm</Button>
           </div>
         </div>
       </div >
