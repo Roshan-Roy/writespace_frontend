@@ -52,7 +52,7 @@ const MyProfile = () => {
         </div>
         <Button variant="outline" className="w-full md:w-60 rounded-2xl">Edit Profile</Button>
       </div>
-      <div className="flex sticky top-14 bg-background">
+      <div className="flex sticky top-14 z-20 bg-background">
         {MyProfileLinks.map(e => {
           return (
             <>
