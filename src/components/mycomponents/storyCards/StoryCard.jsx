@@ -5,10 +5,10 @@ const StoryCard = () => {
     return (
         <div className="relative">
 
-            <Link className="absolute left-0 top-8 md:top-9 flex items-center gap-2.5 text-foreground/80 hover:text-foreground" to="about">
-                <img src="/images/default_avatar.jpg" className="w-6 h-6 rounded-full" alt="profile picture" />
-                <span>By roshan</span>
-            </Link>
+            <div className="absolute left-0 top-8 md:top-9 flex items-center gap-2.5 cursor-pointer">
+                <Link to="/"><img src="/images/default_avatar.jpg" className="w-6 h-6 rounded-full" alt="profile picture" /></Link>
+                <p className="text-sm md:text-base text-foreground/70">By <Link to="/" className="hover:underline text-foreground/80">Roshan</Link> In <Link to="/" className="hover:underline text-foreground/80">Space technology</Link></p>
+            </div>
 
             <Link className="block border-b pt-19 md:pt-20 pb-8 md:pb-9" to="/">
                 <div className="flex gap-5 md:gap-7 mb-6 md:mb-7">

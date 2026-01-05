@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { NavLink } from "react-router"
 import FollowCountProfile from "@/components/mycomponents/followCountProfile/FollowCountProfile"
 import { MyProfileLinks } from "@/constants/ProfileLinks"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Fragment } from "react"
 import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 import api from "@/api/api"
@@ -55,10 +55,10 @@ const MyProfile = () => {
       <div className="flex sticky top-14 z-20 bg-background">
         {MyProfileLinks.map(e => {
           return (
-            <>
+            <Fragment key={e.route}>
               <NavLink to={e.route} className={({ isActive }) => `py-3 lg:py-4 border-b-2 ${isActive ? "border-b-foreground text-foreground" : "border-muted text-foreground/70 hover:text-foreground"}`} end={e.route === "."}>{e.label}</NavLink>
               <div className="border-b-2 border-muted w-6 lg:w-8"></div>
-            </>
+            </Fragment>
           )
         })}
         <div className="border-b-2 border-muted flex-1"></div>
