@@ -4,7 +4,6 @@ import api from "@/api/api"
 import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 import MyFollowingCard from "@/components/mycomponents/followCards/MyFollowingCard"
-
 import {
   Breadcrumb,
   BreadcrumbItem,
