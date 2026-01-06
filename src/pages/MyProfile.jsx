@@ -45,8 +45,8 @@ const MyProfile = () => {
           <div className="flex-1 flex flex-col gap-2 lg:gap-4">
             <span className="font-semibold text-lg md:text-2xl lg:text-4xl break-all leading-tight">{data.username}</span>
             <div className="flex gap-4 lg:gap-4.5">
-              <FollowCountProfile text="Followers" count={data.profile.followers_count} />
-              <FollowCountProfile text="Following" count={data.profile.following_count} />
+              <FollowCountProfile text="Followers" count={data.profile.followers_count} route="/followers"/>
+              <FollowCountProfile text="Following" count={data.profile.following_count} route="/following"/>
             </div>
           </div>
         </div>

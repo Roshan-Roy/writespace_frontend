@@ -5,7 +5,7 @@ import StoryCardSkeleton from "@/components/mycomponents/storyCards/StoryCardSke
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 
 const MyProfileHome = () => {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState([])
   const [pageLoading, setPageLoading] = useState(true)
   const [pageError, setPageError] = useState(false)
 
@@ -41,7 +41,7 @@ const MyProfileHome = () => {
   if (pageError) return <ErrorPage retryFn={handleReloadData} className="h-auto py-16 md:py-20" />
   return (
     <div className="pb-30">
-      {data?.map(e => <MyStoryCard
+      {data.map(e => <MyStoryCard
         id={e.id}
         prev_title={e.prev_title}
         prev_subtitle={e.prev_subtitle}

@@ -16,6 +16,8 @@ import ProtectedRoutes from "./components/mycomponents/protectedRoutes/Protected
 import MyProfileHome from "./pages/MyProfileHome"
 import MyProfileSaved from "./pages/MyProfileSaved"
 import MyProfileAbout from "./pages/MyProfileAbout"
+import MyProfileFollowing from "./pages/MyProfileFollowing"
+import MyProfileFollowers from "./pages/MyProfileFollowers"
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,8 @@ const router = createBrowserRouter([
               { path: "about", element: <MyProfileAbout /> },
             ]
           },
+          { path: "following", element: <MyProfileFollowing /> },
+          { path: "followers", element: <MyProfileFollowers /> },
           { path: "write", element: <Write /> },
           { path: "notifications", element: <Notifications /> }
         ]
