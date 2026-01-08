@@ -47,7 +47,7 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
         } catch (e) {
             const status = e.response?.status
             if (status === 400) {
-                const { username, email } = e.response.data
+                const { username, email } = e.response.data || {}
                 setErrors(prev => ({
                     ...prev,
                     username: Array.isArray(username) ? username[0] : "",
@@ -64,7 +64,7 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
     const handleFormSubmit = (e) => {
         e.preventDefault()
 
-        const result = signupSchema.safeParse(data);
+        const result = signupSchema.safeParse(data)
         if (result.success) {
             setErrors(prevErrors => ({ ...prevErrors, email: "", username: "" }))
             signUp(result.data)

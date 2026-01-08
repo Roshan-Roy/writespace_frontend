@@ -161,7 +161,7 @@ const Write = () => {
                 </>
               ) : (
                 <label
-                  htmlFor="preview_image"
+                  htmlFor="cover_image"
                   className="flex flex-col gap-2 justify-center items-center w-full h-full px-10 sm:px-16 bg-muted text-bg-muted-foreground rounded-sm leading-relaxed text-xs lg:text-sm text-center"
                 >
                   <span>Choose a high-quality image that captures the essence of your story (optional).</span>
@@ -169,7 +169,7 @@ const Write = () => {
                 </label>
               )}
             </div>
-            <input type="file" id="preview_image" className="hidden" onChange={e => handleInputChange(e.target.files[0], "cover_image")} />
+            <input type="file" id="cover_image" className="hidden" onChange={e => handleInputChange(e.target.files[0], "cover_image")} />
             <Textarea placeholder="Write a preview title" className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent mb-1 text-lg font-bold min-h-0 px-0 break-all" value={data.prev_title} onChange={e => handleInputChange(e.target.value, "prev_title")} />
             <Textarea placeholder="Write a preview subtitle..." className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent min-h-0 text-sm mb-2 lg:mb-3 px-0 break-all" value={data.prev_subtitle} onChange={e => handleInputChange(e.target.value, "prev_subtitle")} />
             <p className="text-xs lg:text-sm text-muted-foreground leading-relaxed"><span className="font-semibold">Note :</span> Changes here only affect how your story appears in previews, not the actual content.</p>

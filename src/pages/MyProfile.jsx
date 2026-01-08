@@ -1,5 +1,4 @@
 import { Outlet } from "react-router"
-import { Button } from "@/components/ui/button"
 import { NavLink } from "react-router"
 import FollowCountProfile from "@/components/mycomponents/followCountProfile/FollowCountProfile"
 import { MyProfileLinks } from "@/constants/ProfileLinks"
@@ -8,6 +7,7 @@ import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 import api from "@/api/api"
 import { MEDIA_URL } from "@/lib/urls"
+import EditProfileModal from "@/components/mycomponents/modals/editProfile/EditProfileModal"
 
 const MyProfile = () => {
   const [data, setData] = useState(null)
@@ -45,12 +45,12 @@ const MyProfile = () => {
           <div className="flex-1 flex flex-col gap-2 lg:gap-4">
             <span className="font-semibold text-lg md:text-2xl lg:text-4xl break-all leading-tight">{data.username}</span>
             <div className="flex gap-4 lg:gap-4.5">
-              <FollowCountProfile text="Followers" count={data.profile.followers_count} route="/followers"/>
-              <FollowCountProfile text="Following" count={data.profile.following_count} route="/following"/>
+              <FollowCountProfile text="Followers" count={data.profile.followers_count} route="/followers" />
+              <FollowCountProfile text="Following" count={data.profile.following_count} route="/following" />
             </div>
           </div>
         </div>
-        <Button variant="outline" className="w-full md:w-60 rounded-2xl">Edit Profile</Button>
+        <EditProfileModal username={data.username} image={data.profile.image}/>
       </div>
       <div className="flex sticky top-14 z-20 bg-background">
         {MyProfileLinks.map(e => {

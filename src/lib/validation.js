@@ -17,7 +17,13 @@ export const signupSchema = z.object({
         .string()
         .min(3, minErrorMsg("Username", 3))
         .max(20, maxErrorMsg("Username", 20))
-        .regex(usernameRegex, "Username can only contain lowercase letters, numbers, and underscores"),
+        .refine(
+            val => val === "" || usernameRegex.test(val),
+            {
+                message:
+                    "Username can only contain lowercase letters, numbers, and underscores",
+            }
+        ),
     email: z.email("Please enter a valid email address"),
     password: z
         .string()
@@ -48,3 +54,18 @@ export const resetPasswordSchema = z.object({
 }).refine((data) => data.password === data.cpassword, {
     path: ["cpassword"]
 });
+
+export const profileUpdateSchema = z.object({
+    username: z
+        .string()
+        .min(3, minErrorMsg("Username", 3))
+        .max(20, maxErrorMsg("Username", 20))
+        .refine(
+            val => val === "" || usernameRegex.test(val),
+            {
+                message:
+                    "Username can only contain lowercase letters, numbers, and underscores",
+            }
+        ),
+});
+
