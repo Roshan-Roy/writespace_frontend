@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { useState } from 'react'
@@ -8,11 +8,15 @@ import { MEDIA_URL } from '@/lib/urls'
 import { profileUpdateSchema, formatErrors } from '@/lib/validation'
 import api from '@/api/api'
 import CustomToast from '../../toast/CustomToast'
-import { CircleX } from 'lucide-react'
+import { CircleX, CircleCheck } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { useAuth } from '@/contexts/AuthContext'
+import { Spinner } from '@/components/ui/spinner'
 
-const EditProfileModal = ({ username, image }) => {
+const EditProfileModal = ({ username, image, updateProfileData }) => {
+    const { updateUser } = useAuth()
     const [data, setData] = useState({ username, image: null })
+    const [previewUrl, setPreviewUrl] = useState(null)
     const [errors, setErrors] = useState({
         username: ""
     })
@@ -22,7 +26,12 @@ const EditProfileModal = ({ username, image }) => {
 
 
     const handleInputChange = (value, fieldName) => {
-        setErrors(preErrors => ({ ...preErrors, [fieldName]: "" }))
+        if (fieldName === "image" && !value) {
+            return
+        }
+        if (fieldName === "username") {
+            setErrors(preErrors => ({ ...preErrors, [fieldName]: "" }))
+        }
         setData(prevData => ({ ...prevData, [fieldName]: value }))
     }
     const handleOpenModal = () => {
@@ -47,7 +56,12 @@ const EditProfileModal = ({ username, image }) => {
                 formData.append("remove_image", "true")
             }
 
-            await api.patch("profile_update/", formData)
+            const response = await api.patch("profile_update/", formData)
+            const updatedUserData = response.data.data
+            updateUser({ username: updatedUserData.user.username, image: updatedUserData.image })
+            updateProfileData({ username: updatedUserData.user.username, image: updatedUserData.image })
+            toast.custom(t => <CustomToast t={t} message="Profile updated successfully!" icon={CircleCheck} iconStyles="text-green-500" />)
+            setOpenModal(false)
         } catch (e) {
             const status = e.response?.status
             if (status === 400) {
@@ -67,7 +81,6 @@ const EditProfileModal = ({ username, image }) => {
             setLoading(false)
         }
     }
-
     const handleFormSubmit = (e) => {
         e.preventDefault()
         const result = profileUpdateSchema.safeParse({ username: data.username })
@@ -79,6 +92,27 @@ const EditProfileModal = ({ username, image }) => {
         }
     }
 
+    useEffect(() => {
+        if (!data.image) {
+            setPreviewUrl(null)
+            return
+        }
+
+        const url = URL.createObjectURL(data.image)
+        setPreviewUrl(url)
+
+        return () => {
+            URL.revokeObjectURL(url)
+        }
+    }, [data.image])
+
+    useEffect(() => {
+        if (openModal) {
+            setData(prevData => ({ ...prevData, username, image: null }))
+            setDefaultImage(image)
+        }
+    }, [openModal])
+
     return (
         <>
             <Dialog open={openModal} onOpenChange={() => setOpenModal(false)}>
@@ -88,7 +122,13 @@ const EditProfileModal = ({ username, image }) => {
                         <div className="flex flex-col gap-3 mb-5">
                             <p className="leading-none font-medium text-sm select-none">Photo</p>
                             <div className="flex items-center gap-5">
-                                <img src={data.image ? URL.createObjectURL(data.image) : defaultImage ? `${MEDIA_URL}${defaultImage}` : "/images/default_avatar.jpg"} onChange={handleInputChange} className="w-18 h-18 rounded-full" alt="profile picture" />
+                                <img src={
+                                    previewUrl
+                                        ? previewUrl
+                                        : defaultImage
+                                            ? `${MEDIA_URL}${defaultImage}`
+                                            : "/images/default_avatar.jpg"
+                                } onChange={handleInputChange} className="w-18 h-18 rounded-full" alt="profile picture" />
                                 <div>
                                     <div className="mb-2">
                                         <label htmlFor="image" className="text-green-btn cursor-pointer">Update</label>
@@ -104,7 +144,7 @@ const EditProfileModal = ({ username, image }) => {
                             <Input id="username_or_email" placeholder="Enter username" className="h-11 px-4 rounded-2xl" value={data.username} onChange={e => handleInputChange(e.target.value, "username")} />
                         </div>
                         {errors.username && <p className="text-xs mt-1 text-destructive">{errors.username}</p>}
-                        <Button variant="success" className="w-full mt-6 h-11 rounded-2xl">Save</Button>
+                        <Button variant="success" className="w-full mt-6 h-11 rounded-2xl" disabled={loading}>{loading ? <Spinner /> : "Save"}</Button>
                     </form>
                 </DialogContent>
             </Dialog>

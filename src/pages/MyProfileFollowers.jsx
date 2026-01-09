@@ -12,21 +12,18 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { useAuth } from "@/contexts/AuthContext"
 
 const MyProfileFollowers = () => {
-  const [username, setUsername] = useState(null)
+  const { auth: { user } } = useAuth()
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
   const getMyFollowersAndDetails = async () => {
     try {
-      const [responseOne, responseTwo] = await Promise.all([
-        api.get("my_profile/"),
-        api.get("followers/")
-      ])
-      setUsername(responseOne.data.data.username)
-      setData(responseTwo.data.data)
+      const response = await api.get("followers/")
+      setData(response.data.data)
     } catch (e) {
       setError(true)
     } finally {
@@ -55,7 +52,7 @@ const MyProfileFollowers = () => {
           <BreadcrumbList className="lg:text-base">
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/profile">{username}</Link>
+                <Link to="/profile">{user.username}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />

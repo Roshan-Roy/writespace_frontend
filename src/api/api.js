@@ -8,7 +8,7 @@ const api = axios.create({
 let accessToken = null;
 let refreshToken = null;
 let logoutHandler = null;
-let loginHandler = null;
+let updateTokensHandler = null;
 let isRefreshing = false;
 let failedQueue = [];
 
@@ -26,8 +26,8 @@ export const setLogoutHandler = (fn) => {
     logoutHandler = fn;
 };
 
-export const setLoginHandler = (fn) => {
-    loginHandler = fn;
+export const setUpdateTokensHandler = (fn) => {
+    updateTokensHandler = fn;
 };
 
 // Helper to process the queue of failed requests
@@ -77,7 +77,7 @@ api.interceptors.response.use(
 
                 const { access, refresh } = response.data;
                 setTokens(access, refresh);
-                if (loginHandler) loginHandler({ access, refresh });
+                if (updateTokensHandler) updateTokensHandler({ access, refresh });
 
                 processQueue(null, access);
 

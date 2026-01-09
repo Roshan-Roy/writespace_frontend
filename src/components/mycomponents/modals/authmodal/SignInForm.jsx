@@ -37,8 +37,18 @@ const SignInForm = ({ setOpenModal, setDisableClosing }) => {
         try {
             setDisableClosing(true)
             setLoading(true)
-            const response = await axios.post(`${API_URL}token/`, data)
-            login(response.data)
+            const responseOne = await axios.post(`${API_URL}token/`, data)
+            const { access, refresh } = responseOne.data
+            const responseTwo = await axios.get(`${API_URL}my_profile/`, {
+                headers: {
+                    Authorization: `Bearer ${access}`,
+                },
+            })
+            login({
+                access,
+                refresh,
+                user: responseTwo.data.data
+            })
             setOpenModal(null)
         } catch (e) {
             const status = e.response?.status

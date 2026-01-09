@@ -24,7 +24,9 @@ const MyProfile = () => {
       setLoading(false)
     }
   }
-
+  const updateProfileData = ({ username, image }) => {
+    setData(prevData => ({ ...prevData, username, profile: { ...prevData.profile, image } }))
+  }
   const handleReloadData = () => {
     setError(false)
     setLoading(true)
@@ -50,7 +52,7 @@ const MyProfile = () => {
             </div>
           </div>
         </div>
-        <EditProfileModal username={data.username} image={data.profile.image}/>
+        <EditProfileModal username={data.username} image={data.profile.image} updateProfileData={updateProfileData} />
       </div>
       <div className="flex sticky top-14 z-20 bg-background">
         {MyProfileLinks.map(e => {

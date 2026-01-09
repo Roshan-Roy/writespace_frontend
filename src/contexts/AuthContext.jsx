@@ -1,9 +1,10 @@
 import { createContext, useEffect, useState, useContext } from "react"
-import { setTokens, clearTokens, setLoginHandler, setLogoutHandler } from "@/api/api"
+import { setTokens, clearTokens, setUpdateTokensHandler, setLogoutHandler } from "@/api/api"
 
 const AuthContext = createContext({
     isAuthenticated: false,
     auth: null,
+    updateUser: () => { },
     login: () => { },
     logout: () => { }
 })
@@ -14,8 +15,14 @@ export const AuthProvider = ({ children }) => {
         return storedAuth ? JSON.parse(storedAuth) : null
     })
 
-    const login = (tokens) => {
-        setAuth(tokens)
+    const login = ({ access, refresh, user }) => {
+        setAuth({ access, refresh, user: { username: user.username, email: user.email, image: user.profile.image } })
+    }
+    const updateTokens = ({ access, refresh }) => {
+        setAuth(prevAuth => ({ ...prevAuth, access, refresh }))
+    }
+    const updateUser = ({ username, image }) => {
+        setAuth(prevAuth => ({ ...prevAuth, user: { ...prevAuth.user, username, image } }))
     }
     const logout = () => {
         setAuth(null)
@@ -32,11 +39,11 @@ export const AuthProvider = ({ children }) => {
     }, [auth])
 
     useEffect(() => {
-        setLoginHandler(login)
+        setUpdateTokensHandler(updateTokens)
         setLogoutHandler(logout)
     }, [])
 
-    return <AuthContext.Provider value={{ isAuthenticated: !!auth, auth, login, logout }}>
+    return <AuthContext.Provider value={{ isAuthenticated: !!auth, auth, updateUser, login, logout }}>
         {children}
     </AuthContext.Provider>
 }
