@@ -47,7 +47,7 @@ const MyProfileHome = () => {
         prev_subtitle={e.prev_subtitle}
         created_at={e.created_at}
         cover_image={e.cover_image}
-        topic={e.topic_details.name}
+        topic={e.topic.name}
         key={e.id}
       />)}
     </div>
