@@ -29,6 +29,7 @@ const Write = () => {
     cover_image: null,
     topic: ""
   })
+  const [previewUrl, setPreviewUrl] = useState(null)
   const [allTopics, setAllTopics] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
@@ -126,6 +127,20 @@ const Write = () => {
   }
 
   useEffect(() => {
+    if (!data.cover_image) {
+      setPreviewUrl(null)
+      return
+    }
+
+    const url = URL.createObjectURL(data.cover_image)
+    setPreviewUrl(url)
+
+    return () => {
+      URL.revokeObjectURL(url)
+    }
+  }, [data.cover_image])
+
+  useEffect(() => {
     if (modalOpen && !initialPrevFilled.current) {
       setData(prevData => ({ ...prevData, prev_title: prevData.title.slice(0, limits.prev_title), prev_subtitle: prevData.content.slice(0, limits.prev_subtitle) }))
       initialPrevFilled.current = true
@@ -154,7 +169,7 @@ const Write = () => {
                     <XIcon className="size-4" />
                   </div>
                   <img
-                    src={URL.createObjectURL(data.cover_image)}
+                    src={previewUrl}
                     alt="cover image"
                     className="w-full h-full object-cover rounded-sm"
                   />

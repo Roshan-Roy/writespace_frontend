@@ -18,6 +18,7 @@ import MyProfileSaved from "./pages/MyProfileSaved"
 import MyProfileAbout from "./pages/MyProfileAbout"
 import MyProfileFollowing from "./pages/MyProfileFollowing"
 import MyProfileFollowers from "./pages/MyProfileFollowers"
+import EditStory from "./pages/EditStory"
 
 const router = createBrowserRouter([
   {
@@ -42,7 +43,8 @@ const router = createBrowserRouter([
           { path: "following", element: <MyProfileFollowing /> },
           { path: "followers", element: <MyProfileFollowers /> },
           { path: "write", element: <Write /> },
-          { path: "notifications", element: <Notifications /> }
+          { path: "notifications", element: <Notifications /> },
+          { path: "edit/:story_id", element: <EditStory /> }
         ]
       }
     ]
