@@ -19,6 +19,8 @@ import {
 import { MEDIA_URL } from "@/lib/urls"
 import toast from "react-hot-toast"
 import CustomToast from "@/components/mycomponents/toast/CustomToast"
+import NotFoundPage from "@/components/mycomponents/notFoundPage/NotFoundPage"
+import trim from "@/lib/trim"
 
 const EditStory = () => {
     const { story_id } = useParams()
@@ -26,6 +28,7 @@ const EditStory = () => {
     const [pageLoading, setPageLoading] = useState(true)
     const [loadingUpdateStory, setLoadingUpdateStory] = useState(false)
     const [pageError, setPageError] = useState(false)
+    const [notFound, setNotFound] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
     const [data, setData] = useState({
         title: "",
@@ -40,8 +43,8 @@ const EditStory = () => {
     const [allTopics, setAllTopics] = useState([])
     const isActiveRef = useRef(true)
 
-    const publishBtnDisabled = !(data.title && data.content)
-    const confirmBtnDisabled = !(data.prev_title && data.prev_subtitle && data.topic)
+    const publishBtnDisabled = !(trim(data.title) && trim(data.content))
+    const confirmBtnDisabled = !(trim(data.prev_title) && trim(data.prev_subtitle) && data.topic)
     const limits = { prev_title: 100, prev_subtitle: 140 }
 
     const handleInputChange = (value, fieldName) => {
@@ -141,7 +144,12 @@ const EditStory = () => {
             }))
             setDefaultCoverImage(storyData.cover_image)
         } catch (e) {
-            setPageError(true)
+            const status = e.response?.status
+            if (status === 404) {
+                setNotFound(true)
+            } else {
+                setPageError(true)
+            }
         } finally {
             setPageLoading(false)
         }
@@ -176,6 +184,7 @@ const EditStory = () => {
 
     if (pageLoading) return <LoadingPage className="h-[calc(100dvh-56px)]" />
     if (pageError) return <ErrorPage className="h-[calc(100dvh-56px)]" retryFn={handleReloadData} />
+    if (notFound) return <NotFoundPage message="Story not found" />
     if (modalOpen) {
         return (
             <div className="pt-4 pb-10 sm:pt-6 sm:pb-14">

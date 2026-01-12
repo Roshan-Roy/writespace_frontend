@@ -15,6 +15,7 @@ import api from "@/api/api"
 import toast from "react-hot-toast"
 import CustomToast from "@/components/mycomponents/toast/CustomToast"
 import { useNavigate } from "react-router"
+import trim from "@/lib/trim"
 
 const Write = () => {
   const navigate = useNavigate()
@@ -35,8 +36,8 @@ const Write = () => {
   const [error, setError] = useState(false)
   const [loadingCreateStory, setLoadingCreateStory] = useState(false)
 
-  const publishBtnDisabled = !(data.title && data.content)
-  const confirmBtnDisabled = !(data.prev_title && data.prev_subtitle && data.topic)
+  const publishBtnDisabled = !(trim(data.title) && trim(data.content))
+  const confirmBtnDisabled = !(trim(data.prev_title) && trim(data.prev_subtitle) && data.topic)
   const limits = { prev_title: 100, prev_subtitle: 140 }
 
   const handleInputChange = (value, fieldName) => {
@@ -142,11 +143,11 @@ const Write = () => {
 
   useEffect(() => {
     if (modalOpen && !initialPrevFilled.current) {
-      setData(prevData => ({ ...prevData, prev_title: prevData.title.slice(0, limits.prev_title), prev_subtitle: prevData.content.slice(0, limits.prev_subtitle) }))
+      setData(prevData => ({ ...prevData, prev_title: trim(prevData.title).slice(0, limits.prev_title), prev_subtitle: trim(prevData.content).slice(0, limits.prev_subtitle) }))
       initialPrevFilled.current = true
     }
   }, [modalOpen])
-
+  console.log(data)
   useEffect(() => {
     isActiveRef.current = true
     getAllTopics()

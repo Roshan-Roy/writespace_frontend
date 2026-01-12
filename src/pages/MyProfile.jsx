@@ -7,7 +7,7 @@ import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 import api from "@/api/api"
 import { MEDIA_URL } from "@/lib/urls"
-import EditProfileModal from "@/components/mycomponents/modals/editProfile/EditProfileModal"
+import EditProfileModal from "@/components/mycomponents/modals/editProfileModal/EditProfileModal"
 
 const MyProfile = () => {
   const [data, setData] = useState(null)

@@ -10,8 +10,12 @@ const MyStoryCard = ({
   prev_subtitle,
   created_at,
   cover_image,
-  topic
+  topic,
+  handleSetDeleteId
 }) => {
+  const handleDeleteBtnClick = () => {
+    handleSetDeleteId(id)
+  }
   return (
     <div className="relative">
       <p className="absolute left-0 top-8 md:top-9 text-sm md:text-base text-foreground/70 cursor-pointer">In <Link to="/" className="hover:underline text-foreground/80">{topic}</Link></p>
@@ -43,8 +47,8 @@ const MyStoryCard = ({
       </Link>
 
       <div className="absolute bottom-8 md:bottom-9 right-0 flex items-center gap-2.5 md:gap-3.5 cursor-pointer">
-        <Trash2 className="size-6 text-foreground/80 hover:text-foreground" />
-        <SquarePen className="size-6 text-foreground/80 hover:text-foreground" />
+        <Trash2 className="size-6 text-foreground/80 hover:text-foreground" onClick={handleDeleteBtnClick} />
+        <Link to={`/edit/${id}/`}><SquarePen className="size-6 text-foreground/80 hover:text-foreground" /></Link>
       </div>
 
     </div>
