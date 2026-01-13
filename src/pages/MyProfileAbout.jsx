@@ -74,7 +74,7 @@ const MyProfileAbout = () => {
   }, [])
 
   if (pageLoading) return (
-    <div className="pt-6 pb-12 md:pb-14 flex flex-col gap-4">
+    <div className="pt-6 md:pt-8 pb-12 md:pb-14 flex flex-col gap-4">
       <Skeleton className="h-6" />
       <Skeleton className="h-6" />
       <Skeleton className="h-6 w-3/4" />
@@ -82,7 +82,7 @@ const MyProfileAbout = () => {
   )
   if (pageError) return <ErrorPage retryFn={handleReloadData} className="h-auto py-18 md:py-20" />
   return (
-    <div className="pt-6 pb-12 md:pb-14">
+    <div className="pt-6 md:pt-8 pb-12 md:pb-14">
       <div className={editing ? "block" : "hidden"}>
         <Textarea ref={textAreaRef} className="p-0 min-h-0 rounded-none dark:bg-transparent border-none shadow-none leading-loose md:text-lg" value={data} onChange={e => handleInputChange(e.target.value)} />
         <div className="mt-8 md:mt-10 flex justify-end gap-2">
