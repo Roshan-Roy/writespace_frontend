@@ -8,23 +8,38 @@ import CustomToast from "../toast/CustomToast"
 import toast from "react-hot-toast"
 import { CircleX } from "lucide-react"
 
-const MyFollowersCard = ({
+const FollowUnfollowCard = ({
     id,
     image,
     username,
-    filterFollowersById
+    is_following,
+    my_profile = false,
 }) => {
+    const [following, setFollowing] = useState(is_following)
     const [loading, setLoading] = useState(false)
-    const profileLink = `/profile/${id}`
+    const profileLink = my_profile ? "/my_profile" : `/profile/${id}`
 
-    const handleRemoveBtnClick = async () => {
+    const handleFollowBtnClick = async () => {
         try {
             setLoading(true)
-            await api.delete(`remove_follower/${id}/`)
-            filterFollowersById(id)
+            await api.post(`follow/${id}/`)
+            setFollowing(true)
         } catch (e) {
-            setLoading(false)
             toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleUnFollowBtnClick = async () => {
+        try {
+            setLoading(true)
+            await api.delete(`follow/${id}/`)
+            setFollowing(false)
+        } catch (e) {
+            toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -34,9 +49,9 @@ const MyFollowersCard = ({
                 <Link className="block w-12 lg:w-14 aspect-square" to={profileLink}><img src={image ? `${MEDIA_URL}${image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-full h-full rounded-full" /></Link>
                 <Link to={profileLink} className="lg:text-lg">{username}</Link>
             </div>
-            <Button variant="outline" className="w-26 lg:w-28 rounded-full" disabled={loading} onClick={handleRemoveBtnClick}>{loading ? <Spinner /> : "Remove"}</Button>
+            {!my_profile && <Button variant={following ? "outline" : "default"} className="w-26 lg:w-28 rounded-full" disabled={loading} onClick={following ? handleUnFollowBtnClick : handleFollowBtnClick}>{loading ? <Spinner /> : following ? "Unfollow" : "Follow"}</Button>}
         </div>
     )
 }
 
-export default MyFollowersCard 
+export default FollowUnfollowCard

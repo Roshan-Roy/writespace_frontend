@@ -63,7 +63,7 @@ const NavProfile = () => {
             />
 
             <div className={`absolute bg-popover top-full translate-y-2.5 -right-2 transition-all shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] rounded-md dark:shadow-none w-58 sm:w-64 ${profileOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}>
-                <Link className="flex items-center gap-4 py-4 px-6 text-foreground/80 hover:text-foreground" onClick={handleCloseProfile} to="/profile">
+                <Link className="flex items-center gap-4 py-4 px-6 text-foreground/80 hover:text-foreground" onClick={handleCloseProfile} to="/my_profile">
                     <img className="w-12 h-12 rounded-full" src={user.image ? `${MEDIA_URL}${user.image}` : "/images/default_avatar.jpg"} alt="profile picture" />
                     <div className="flex-1 flex flex-col gap-1 min-w-0">
                         <span className="truncate">{user.username}</span>

@@ -148,7 +148,7 @@ const EditProfileModal = ({ username, image, updateProfileData }) => {
                     </form>
                 </DialogContent>
             </Dialog>
-            <Button variant="outline" className="w-full md:w-60 rounded-2xl" onClick={handleOpenModal}>Edit Profile</Button>
+            <Button variant="outline" className="w-full md:w-56 rounded-full h-10" onClick={handleOpenModal}>Edit Profile</Button>
         </>
     )
 }

@@ -48,7 +48,7 @@ const MyStoryCard = ({
 
       <div className="absolute bottom-8 md:bottom-9 right-0 flex items-center gap-2.5 md:gap-3.5 cursor-pointer">
         <Trash2 className="size-6 text-foreground/80 hover:text-foreground" onClick={handleDeleteBtnClick} />
-        <Link to={`/edit/${id}/`}><SquarePen className="size-6 text-foreground/80 hover:text-foreground" /></Link>
+        <Link to={`/edit/${id}`}><SquarePen className="size-6 text-foreground/80 hover:text-foreground" /></Link>
       </div>
 
     </div>

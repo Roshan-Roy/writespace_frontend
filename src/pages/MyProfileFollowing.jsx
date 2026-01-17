@@ -20,7 +20,7 @@ const MyProfileFollowing = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
-  const getMyFollowingAndDetails = async () => {
+  const getMyFollowing = async () => {
     try {
       const response = await api.get("following/")
       setData(response.data.data)
@@ -36,11 +36,11 @@ const MyProfileFollowing = () => {
   const handleReloadData = () => {
     setError(false)
     setLoading(true)
-    getMyFollowingAndDetails()
+    getMyFollowing()
   }
 
   useEffect(() => {
-    getMyFollowingAndDetails()
+    getMyFollowing()
   }, [])
 
   if (loading) return <LoadingPage className="h-[calc(100dvh-56px)]" />
@@ -52,7 +52,7 @@ const MyProfileFollowing = () => {
           <BreadcrumbList className="lg:text-base">
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/profile">{user.username}</Link>
+                <Link to="/my_profile">{user.username}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />

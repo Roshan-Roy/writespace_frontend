@@ -1,7 +1,7 @@
 import { Outlet } from "react-router"
 import { NavLink } from "react-router"
 import FollowCountProfile from "@/components/mycomponents/followCountProfile/FollowCountProfile"
-import { MyProfileLinks } from "@/constants/ProfileLinks"
+import { myProfileLinks } from "@/constants/ProfileLinks"
 import { useEffect, useState, Fragment } from "react"
 import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
@@ -47,15 +47,15 @@ const MyProfile = () => {
           <div className="flex-1 flex flex-col gap-2 lg:gap-4">
             <span className="font-semibold text-lg md:text-2xl lg:text-4xl break-all leading-tight">{data.username}</span>
             <div className="flex gap-4 lg:gap-4.5">
-              <FollowCountProfile text="Followers" count={data.profile.followers_count} route="/followers" />
-              <FollowCountProfile text="Following" count={data.profile.following_count} route="/following" />
+              <FollowCountProfile text="Followers" count={data.profile.followers_count} route="/my_followers" />
+              <FollowCountProfile text="Following" count={data.profile.following_count} route="/my_following" />
             </div>
           </div>
         </div>
         <EditProfileModal username={data.username} image={data.profile.image} updateProfileData={updateProfileData} />
       </div>
       <div className="flex sticky top-14 z-20 bg-background">
-        {MyProfileLinks.map(e => {
+        {myProfileLinks.map(e => {
           return (
             <Fragment key={e.route}>
               <NavLink to={e.route} className={({ isActive }) => `py-3 lg:py-4 border-b-2 ${isActive ? "border-b-foreground text-foreground" : "border-muted text-foreground/70 hover:text-foreground"}`} end={e.route === "."}>{e.label}</NavLink>

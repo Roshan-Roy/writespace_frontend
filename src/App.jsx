@@ -19,6 +19,11 @@ import MyProfileAbout from "./pages/MyProfileAbout"
 import MyProfileFollowing from "./pages/MyProfileFollowing"
 import MyProfileFollowers from "./pages/MyProfileFollowers"
 import EditStory from "./pages/EditStory"
+import Profile from "./pages/Profile"
+import ProfileHome from "./pages/ProfileHome"
+import ProfileAbout from "./pages/ProfileAbout"
+import ProfileFollowing from "./pages/ProfileFollowing"
+import ProfileFollowers from "./pages/ProfileFollowers"
 
 const router = createBrowserRouter([
   {
@@ -32,7 +37,7 @@ const router = createBrowserRouter([
         children: [
           { path: "saved", element: <Saved /> },
           {
-            path: "profile",
+            path: "my_profile",
             element: <MyProfile />,
             children: [
               { index: true, element: <MyProfileHome /> },
@@ -40,11 +45,21 @@ const router = createBrowserRouter([
               { path: "about", element: <MyProfileAbout /> },
             ]
           },
-          { path: "following", element: <MyProfileFollowing /> },
-          { path: "followers", element: <MyProfileFollowers /> },
+          { path: "my_following", element: <MyProfileFollowing /> },
+          { path: "my_followers", element: <MyProfileFollowers /> },
           { path: "write", element: <Write /> },
           { path: "notifications", element: <Notifications /> },
-          { path: "edit/:story_id", element: <EditStory /> }
+          { path: "edit/:story_id", element: <EditStory /> },
+          {
+            path: "profile/:profile_id",
+            element: <Profile />,
+            children: [
+              { index: true, element: <ProfileHome /> },
+              { path: "about", element: <ProfileAbout /> },
+            ]
+          },
+          { path: "following/:profile_id", element: <ProfileFollowing /> },
+          { path: "followers/:profile_id", element: <ProfileFollowers /> }
         ]
       }
     ]

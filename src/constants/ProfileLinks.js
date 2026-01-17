@@ -1,4 +1,4 @@
-export const MyProfileLinks = [
+export const myProfileLinks = [
     {
         label: "Home",
         route: "."
@@ -13,3 +13,14 @@ export const MyProfileLinks = [
     },
 ]
 
+
+export const profileLinks = [
+    {
+        label: "Home",
+        route: "."
+    },
+    {
+        label: "About",
+        route: "about"
+    },
+]

@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     })
 
     const login = ({ access, refresh, user }) => {
-        setAuth({ access, refresh, user: { username: user.username, email: user.email, image: user.profile.image } })
+        setAuth({ access, refresh, user: { id: user.profile.id, username: user.username, email: user.email, image: user.profile.image } })
     }
     const updateTokens = ({ access, refresh }) => {
         setAuth(prevAuth => ({ ...prevAuth, access, refresh }))

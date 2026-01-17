@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import api from "@/api/api"
 import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
-import MyFollowersCard from "@/components/mycomponents/followCards/MyFollowersCard"
+import FollowUnfollowCard from "@/components/mycomponents/followCards/FollowUnfollowCard"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,38 +13,69 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { useAuth } from "@/contexts/AuthContext"
+import { useParams } from "react-router"
+import { Navigate } from "react-router"
+import NotFoundPage from "@/components/mycomponents/notFoundPage/NotFoundPage"
 
-const MyProfileFollowers = () => {
+const ProfileFollowers = () => {
   const { auth: { user } } = useAuth()
+  const { profile_id } = useParams()
   const [data, setData] = useState([])
+  const [username, setUsername] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const [notFound, setNotFound] = useState(false)
 
-  const getMyFollowers = async () => {
+  const profileLink = `/profile/${profile_id}/`
+
+  const sortedData = (data) => {
+    const myProfile = []
+    const following = []
+    const notFollowing = []
+    data.forEach(e => {
+      if (e.id === user.id) {
+        myProfile.push(e)
+      } else if (e.is_following) {
+        following.push(e)
+      } else {
+        notFollowing.push(e)
+      }
+    })
+    return [...myProfile, ...following, ...notFollowing]
+  }
+
+  const getFollowersAndUsername = async () => {
     try {
-      const response = await api.get("followers/")
-      setData(response.data.data)
+      const responseOne = await api.get(`profile/${profile_id}/`)
+      const responseTwo = await api.get(`followers/${profile_id}/`)
+      setUsername(responseOne.data.data.username)
+      setData(sortedData(responseTwo.data.data))
     } catch (e) {
-      setError(true)
+      const status = e.response?.status
+      if (status === 404) {
+        setNotFound(true)
+      } else {
+        setError(true)
+      }
     } finally {
       setLoading(false)
     }
   }
-  const filterFollowersById = (id) => {
-    setData(prevData => prevData.filter(e => e.id !== id))
-  }
+
   const handleReloadData = () => {
     setError(false)
     setLoading(true)
-    getMyFollowers()
+    getFollowersAndUsername()
   }
 
   useEffect(() => {
-    getMyFollowers()
+    getFollowersAndUsername()
   }, [])
 
+  if (Number(profile_id) === user.id) return <Navigate to="/my_followers" replace />
   if (loading) return <LoadingPage className="h-[calc(100dvh-56px)]" />
   if (error) return <ErrorPage className="h-[calc(100dvh-56px)]" retryFn={handleReloadData} />
+  if (notFound) return <NotFoundPage message="Profile not found" />
   return (
     <div className="mx-auto w-17/20 max-w-4xl">
       <div className="pt-6 lg:pt-10">
@@ -52,7 +83,7 @@ const MyProfileFollowers = () => {
           <BreadcrumbList className="lg:text-base">
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/my_profile">{user.username}</Link>
+                <Link to={profileLink}>{username}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -64,7 +95,7 @@ const MyProfileFollowers = () => {
         <span className="font-semibold text-2xl sm:text-4xl lg:text-5xl">{data.length} Followers</span>
       </div>
       <div className="pt-4 pb-8 lg:pt-6 lg:pb-12 flex flex-col gap-1">
-        {data.map(e => <MyFollowersCard {...e} filterFollowersById={filterFollowersById} key={e.id} />)}
+        {data.map(e => <FollowUnfollowCard {...e} my_profile={e.id === user.id} key={e.id} />)}
       </div>
     </div>
 
@@ -72,4 +103,4 @@ const MyProfileFollowers = () => {
 }
 
 
-export default MyProfileFollowers
+export default ProfileFollowers

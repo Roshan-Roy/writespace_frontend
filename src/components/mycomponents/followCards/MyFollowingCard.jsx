@@ -15,6 +15,7 @@ const MyFollowingCard = ({
     filterFollowingById
 }) => {
     const [loading, setLoading] = useState(false)
+    const profileLink = `/profile/${id}`
 
     const handleUnfollowBtnClick = async () => {
         try {
@@ -30,8 +31,8 @@ const MyFollowingCard = ({
     return (
         <div className="flex items-center justify-between py-2 lg:py-3">
             <div className="flex items-center gap-4 lg:gap-6">
-                <Link className="block w-12 lg:w-14 aspect-square" to="/"><img src={image ? `${MEDIA_URL}${image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-full h-full rounded-full" /></Link>
-                <Link to="/" className="lg:text-lg">{username}</Link>
+                <Link className="block w-12 lg:w-14 aspect-square" to={profileLink}><img src={image ? `${MEDIA_URL}${image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-full h-full rounded-full" /></Link>
+                <Link to={profileLink} className="lg:text-lg">{username}</Link>
             </div>
             <Button variant="outline" className="w-26 lg:w-28 rounded-full" disabled={loading} onClick={handleUnfollowBtnClick}>{loading ? <Spinner /> : "Unfollow"}</Button>
         </div>

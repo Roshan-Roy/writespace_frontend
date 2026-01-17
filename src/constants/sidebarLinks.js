@@ -13,7 +13,7 @@ const sidebarLinks = [
     },
     {
         label: "Profile",
-        route: "/profile",
+        route: "/my_profile",
         icon: User,
     },
 ];
