@@ -25,14 +25,12 @@ const MyStoryCard = ({
             <p className="font-bold text-xl md:text-2xl leading-tight mb-2.5 md:mb-3.5 line-clamp-3 wrap-anywhere">{prev_title}</p>
             <p className="text-foreground/70 md:text-lg leading-tight line-clamp-4 wrap-anywhere">{prev_subtitle}</p>
           </div>
-
           {cover_image && <img
             src={`${MEDIA_URL}${cover_image}`}
             alt="cover image"
             className="self-start aspect-video w-20 md:w-40 rounded-sm"
           />}
         </div>
-
         <div className="text-foreground/70 text-sm md:text-base flex items-center gap-4 md:gap-6">
           <span>{formatDate(created_at)}</span>
           <div className="flex items-center gap-1.5">
@@ -45,12 +43,10 @@ const MyStoryCard = ({
           </div>
         </div>
       </Link>
-
       <div className="absolute bottom-8 md:bottom-9 right-0 flex items-center gap-2.5 md:gap-3.5 cursor-pointer">
         <Trash2 className="size-6 text-foreground/80 hover:text-foreground" onClick={handleDeleteBtnClick} />
         <Link to={`/edit/${id}`}><SquarePen className="size-6 text-foreground/80 hover:text-foreground" /></Link>
       </div>
-
     </div>
   )
 }
