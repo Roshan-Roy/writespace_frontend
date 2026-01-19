@@ -46,10 +46,9 @@ const ProfileFollowing = () => {
 
   const getFollowingAndUsername = async () => {
     try {
-      const responseOne = await api.get(`profile/${profile_id}/`)
-      const responseTwo = await api.get(`following/${profile_id}/`)
-      setUsername(responseOne.data.data.username)
-      setData(sortedData(responseTwo.data.data))
+      const response = await api.get(`following/${profile_id}/`)
+      setUsername(response.data.username)
+      setData(sortedData(response.data.data))
     } catch (e) {
       const status = e.response?.status
       if (status === 404) {
@@ -65,7 +64,7 @@ const ProfileFollowing = () => {
   const handleReloadData = () => {
     setError(false)
     setLoading(true)
-    getFollowersAndUsername()
+    getFollowingAndUsername()
   }
 
   useEffect(() => {
@@ -88,11 +87,11 @@ const ProfileFollowing = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Followers</BreadcrumbPage>
+              <BreadcrumbPage>Following</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <span className="font-semibold text-2xl sm:text-4xl lg:text-5xl">{data.length} Followers</span>
+        <span className="font-semibold text-2xl sm:text-4xl lg:text-5xl">{data.length} Following</span>
       </div>
       <div className="pt-4 pb-8 lg:pt-6 lg:pb-12 flex flex-col gap-1">
         {data.map(e => <FollowUnfollowCard {...e} my_profile={e.id === user.id} key={e.id} />)}

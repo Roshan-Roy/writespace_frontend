@@ -53,7 +53,7 @@ const ProfileHome = () => {
           created_at={e.created_at}
           cover_image={e.cover_image}
           topic={e.topic.name}
-          my_profile={true}
+          topic_id={e.topic.id}
           key={e.id}
         />)}
       </div>

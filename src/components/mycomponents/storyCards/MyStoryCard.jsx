@@ -11,6 +11,7 @@ const MyStoryCard = ({
   created_at,
   cover_image,
   topic,
+  topic_id,
   handleSetDeleteId
 }) => {
   const handleDeleteBtnClick = () => {
@@ -18,7 +19,7 @@ const MyStoryCard = ({
   }
   return (
     <div className="relative">
-      <p className="absolute left-0 top-8 md:top-9 text-sm md:text-base text-foreground/70 cursor-pointer">In <Link to="/" className="hover:underline text-foreground/80">{topic}</Link></p>
+      <p className="absolute left-0 top-8 md:top-9 text-sm md:text-base text-foreground/70 cursor-pointer">In <Link to={`/topic/${topic_id}`} className="hover:underline text-foreground/80">{topic}</Link></p>
       <Link to="/" className="block border-b pb-8 md:pb-9 pt-19 md:pt-20">
         <div className="flex gap-5 md:gap-7 mb-6 md:mb-7">
           <div className="flex-1">

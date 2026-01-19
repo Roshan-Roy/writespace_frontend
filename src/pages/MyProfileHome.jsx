@@ -59,6 +59,7 @@ const MyProfileHome = () => {
           created_at={e.created_at}
           cover_image={e.cover_image}
           topic={e.topic.name}
+          topic_id={e.topic.id}
           handleSetDeleteId={handleSetDeleteId}
           key={e.id}
         />)}

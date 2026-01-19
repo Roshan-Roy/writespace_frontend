@@ -46,10 +46,9 @@ const ProfileFollowers = () => {
 
   const getFollowersAndUsername = async () => {
     try {
-      const responseOne = await api.get(`profile/${profile_id}/`)
-      const responseTwo = await api.get(`followers/${profile_id}/`)
-      setUsername(responseOne.data.data.username)
-      setData(sortedData(responseTwo.data.data))
+      const response = await api.get(`followers/${profile_id}/`)
+      setUsername(response.data.username)
+      setData(sortedData(response.data.data))
     } catch (e) {
       const status = e.response?.status
       if (status === 404) {
