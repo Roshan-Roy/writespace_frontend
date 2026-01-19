@@ -83,6 +83,7 @@ const Topic = () => {
                     cover_image={e.cover_image}
                     profile_id={e.profile.id}
                     username={e.profile.username}
+                    profile_image={e.profile.image}
                     key={e.id}
                 />)}
             </div>

@@ -13,6 +13,7 @@ const StoryCard = ({
     topic_id,
     username,
     profile_id,
+    profile_image
 }) => {
     return (
         <div className="relative">
@@ -20,7 +21,7 @@ const StoryCard = ({
                 <p className="absolute left-0 top-8 md:top-9 text-sm md:text-base text-foreground/70 cursor-pointer">In <Link to={`/topic/${topic_id}`} className="hover:underline text-foreground/80">{topic}</Link></p>
             ) : (
                 <div className="absolute left-0 top-8 md:top-9 flex items-center gap-2.5 cursor-pointer">
-                    <Link to="/"><img src="/images/default_avatar.jpg" className="w-6 h-6 rounded-full" alt="profile picture" /></Link>
+                    <Link to="/"><img src={profile_image ? `${MEDIA_URL}${profile_image}` : "/images/default_avatar.jpg"} className="w-6 h-6 rounded-full" alt="profile picture" /></Link>
                     <p className="text-sm md:text-base text-foreground/70">By <Link to={`/profile/${profile_id}`} className="hover:underline text-foreground/80">{username}</Link>{topic_id && <>{" In "} <Link to={`/topic/${topic_id}`} className="hover:underline text-foreground/80">{topic}</Link></>}</p>
                 </div >
             )}
