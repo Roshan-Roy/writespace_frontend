@@ -108,7 +108,7 @@ const EditStory = () => {
                 { id: toastId, duration: 4000 }
             )
             if (isActiveRef.current) {
-                navigate("/profile")
+                navigate("/my_profile")
             }
 
         } catch (e) {
