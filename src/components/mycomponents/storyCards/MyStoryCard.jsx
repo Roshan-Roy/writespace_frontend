@@ -12,6 +12,8 @@ const MyStoryCard = ({
   cover_image,
   topic,
   topic_id,
+  likes_count,
+  comments_count,
   handleSetDeleteId
 }) => {
   const handleDeleteBtnClick = () => {
@@ -20,7 +22,7 @@ const MyStoryCard = ({
   return (
     <div className="relative">
       <p className="absolute left-0 top-8 md:top-9 text-sm md:text-base text-foreground/70 cursor-pointer">In <Link to={`/topic/${topic_id}`} className="hover:underline text-foreground/80">{topic}</Link></p>
-      <Link to="/" className="block border-b pb-8 md:pb-9 pt-19 md:pt-20">
+      <Link to={`/story/${id}`} className="block border-b pb-8 md:pb-9 pt-19 md:pt-20">
         <div className="flex gap-5 md:gap-7 mb-6 md:mb-7">
           <div className="flex-1">
             <p className="font-bold text-xl md:text-2xl leading-tight mb-2.5 md:mb-3.5 line-clamp-3 wrap-anywhere">{prev_title}</p>
@@ -36,11 +38,11 @@ const MyStoryCard = ({
           <span>{formatDate(created_at)}</span>
           <div className="flex items-center gap-1.5">
             <FaHeart />
-            <span>423</span>
+            <span>{likes_count}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <FaComment />
-            <span>150</span>
+            <span>{comments_count}</span>
           </div>
         </div>
       </Link>

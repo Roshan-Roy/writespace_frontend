@@ -26,6 +26,7 @@ import ProfileFollowing from "./pages/ProfileFollowing"
 import ProfileFollowers from "./pages/ProfileFollowers"
 import Topics from "./pages/topics"
 import Topic from "./pages/Topic"
+import Story from "./pages/Story"
 
 const router = createBrowserRouter([
   {
@@ -63,7 +64,8 @@ const router = createBrowserRouter([
           { path: "following/:profile_id", element: <ProfileFollowing /> },
           { path: "followers/:profile_id", element: <ProfileFollowers /> },
           { path: "topics", element: <Topics /> },
-          { path: "topic/:topic_id", element: <Topic /> }
+          { path: "topic/:topic_id", element: <Topic /> },
+          { path: "story/:story_id", element: <Story /> }
         ]
       }
     ]

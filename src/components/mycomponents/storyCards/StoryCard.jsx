@@ -13,7 +13,10 @@ const StoryCard = ({
     topic_id,
     username,
     profile_id,
-    profile_image
+    profile_image,
+    likes_count,
+    comments_count,
+    is_saved
 }) => {
     return (
         <div className="relative">
@@ -25,7 +28,7 @@ const StoryCard = ({
                     <p className="text-sm md:text-base text-foreground/70">By <Link to={`/profile/${profile_id}`} className="hover:underline text-foreground/80">{username}</Link>{topic_id && <>{" In "} <Link to={`/topic/${topic_id}`} className="hover:underline text-foreground/80">{topic}</Link></>}</p>
                 </div >
             )}
-            <Link className="block border-b pt-19 md:pt-20 pb-8 md:pb-9" to="/">
+            <Link className="block border-b pt-19 md:pt-20 pb-8 md:pb-9" to={`/story/${id}`}>
                 <div className="flex gap-5 md:gap-7 mb-6 md:mb-7">
                     <div className="flex-1">
                         <p className="font-bold text-xl md:text-2xl leading-tight mb-2.5 md:mb-3.5 line-clamp-3 wrap-anywhere">{prev_title}</p>
@@ -41,11 +44,11 @@ const StoryCard = ({
                     <span>{formatDate(created_at)}</span>
                     <div className="flex items-center gap-1.5">
                         <FaHeart />
-                        <span>423</span>
+                        <span>{likes_count}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                         <FaComment />
-                        <span>150</span>
+                        <span>{comments_count}</span>
                     </div>
                 </div>
             </Link>
