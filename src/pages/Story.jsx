@@ -19,6 +19,35 @@ const Story = () => {
   const [pageError, setPageError] = useState(false)
   const [notFound, setNotFound] = useState(false)
   const [followLoading, setFollowLoading] = useState(false)
+  const [saving, setSaving] = useState(false)
+
+  const handleSaveStory = async () => {
+    if (saving) return
+    setSaving(true)
+
+    try {
+      setData(prev => ({ ...prev, is_saved: true }))
+      await api.post(`save/${story_id}/`)
+    } catch (e) {
+      setData(prev => ({ ...prev, is_saved: false }))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleUnSaveStory = async () => {
+    if (saving) return
+    setSaving(true)
+
+    try {
+      setData(prev => ({ ...prev, is_saved: false }))
+      await api.delete(`save/${story_id}/`)
+    } catch (e) {
+      setData(prev => ({ ...prev, is_saved: true }))
+    } finally {
+      setSaving(false)
+    }
+  }
 
   const getStory = async () => {
     try {
@@ -91,7 +120,7 @@ const Story = () => {
             <span>{data.comments.length}</span>
           </div>
         </div>
-        <FaRegBookmark className="text-2xl" />
+        {data.is_saved ? <FaBookmark className="text-2xl" onClick={handleUnSaveStory} /> : <FaRegBookmark className="text-2xl" onClick={handleSaveStory} />}
       </div>
       {data.cover_image && (
         <div className="w-full aspect-video mt-8 lg:mt-10">

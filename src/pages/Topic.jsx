@@ -86,6 +86,7 @@ const Topic = () => {
                     profile_image={e.profile.image}
                     likes_count={e.likes_count}
                     comments_count={e.comments_count}
+                    is_saved={e.is_saved}
                     key={e.id}
                 />)}
             </div>

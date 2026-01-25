@@ -2,6 +2,8 @@ import { FaHeart, FaComment, FaRegBookmark, FaBookmark } from "react-icons/fa"
 import { Link } from "react-router"
 import { formatDate } from "@/lib/utils"
 import { MEDIA_URL } from "@/lib/urls"
+import { useState } from "react"
+import api from "@/api/api"
 
 const StoryCard = ({
     id,
@@ -18,6 +20,36 @@ const StoryCard = ({
     comments_count,
     is_saved
 }) => {
+    const [isSaved, setIsSaved] = useState(is_saved)
+    const [saving, setSaving] = useState(false)
+
+    const handleSaveStory = async () => {
+        if (saving) return
+        setSaving(true)
+
+        try {
+            setIsSaved(true)
+            await api.post(`save/${id}/`)
+        } catch (e) {
+            setIsSaved(false)
+        } finally {
+            setSaving(false)
+        }
+    }
+
+    const handleUnSaveStory = async () => {
+        if (saving) return
+        setSaving(true)
+
+        try {
+            setIsSaved(false)
+            await api.delete(`save/${id}/`)
+        } catch (e) {
+            setIsSaved(true)
+        } finally {
+            setSaving(false)
+        }
+    }
     return (
         <div className="relative">
             {!profile_id ? (
@@ -52,7 +84,7 @@ const StoryCard = ({
                     </div>
                 </div>
             </Link>
-            <FaRegBookmark className="absolute bottom-8 md:bottom-9 right-0 text-2xl text-foreground/80 hover:text-foreground cursor-pointer" />
+            {isSaved ? <FaBookmark className="absolute bottom-8 md:bottom-9 right-0 text-2xl text-foreground/80 hover:text-foreground cursor-pointer" onClick={handleUnSaveStory} /> : <FaRegBookmark className="absolute bottom-8 md:bottom-9 right-0 text-2xl text-foreground/80 hover:text-foreground cursor-pointer" onClick={handleSaveStory} />}
         </div >
     )
 }
