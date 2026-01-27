@@ -7,7 +7,7 @@ import api from "@/api/api"
 import CustomToast from "../../toast/CustomToast"
 import toast from "react-hot-toast"
 
-export function ConfirmDeleteModal({ deleteId, setDeleteId, filterStories }) {
+const ConfirmDeleteModal = ({ deleteId, setDeleteId, filterStories }) => {
     const [loading, setLoading] = useState(false)
     const deleteStory = async () => {
         try {
@@ -39,3 +39,5 @@ export function ConfirmDeleteModal({ deleteId, setDeleteId, filterStories }) {
         </Dialog>
     )
 }
+
+export default ConfirmDeleteModal

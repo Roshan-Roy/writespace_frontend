@@ -61,7 +61,7 @@ const MyProfileFollowers = () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <span className="font-semibold text-2xl sm:text-4xl lg:text-5xl">{data.length} Followers</span>
+        <span className="font-semibold text-2xl sm:text-4xl lg:text-5xl">{data.length} {data.length === 1 ? "Follower" : "Followers"}</span>
       </div>
       <div className="pt-4 pb-8 lg:pt-6 lg:pb-12 flex flex-col gap-1">
         {data.map(e => <MyFollowersCard {...e} filterFollowersById={filterFollowersById} key={e.id} />)}

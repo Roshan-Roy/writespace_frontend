@@ -14,6 +14,8 @@ const FollowUnfollowCard = ({
     username,
     is_following,
     my_profile = false,
+    handleFollowId = () => { },
+    handleUnfollowId = () => { }
 }) => {
     const [following, setFollowing] = useState(is_following)
     const [loading, setLoading] = useState(false)
@@ -24,6 +26,7 @@ const FollowUnfollowCard = ({
             setLoading(true)
             await api.post(`follow/${id}/`)
             setFollowing(true)
+            handleFollowId(id)
         } catch (e) {
             toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
         } finally {
@@ -36,6 +39,7 @@ const FollowUnfollowCard = ({
             setLoading(true)
             await api.delete(`follow/${id}/`)
             setFollowing(false)
+            handleUnfollowId(id)
         } catch (e) {
             toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
         } finally {
@@ -44,10 +48,10 @@ const FollowUnfollowCard = ({
     }
 
     return (
-        <div className="flex items-center justify-between py-2 lg:py-3">
-            <div className="flex items-center gap-4 lg:gap-6">
-                <Link className="block w-12 lg:w-14 aspect-square" to={profileLink}><img src={image ? `${MEDIA_URL}${image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-full h-full rounded-full" /></Link>
-                <Link to={profileLink} className="lg:text-lg">{username}</Link>
+        <div className="flex items-center justify-between py-2 lg:py-3 gap-4">
+            <div className="flex items-center gap-4 lg:gap-6 min-w-0">
+                <Link className="block w-12 lg:w-14 aspect-square shrink-0" to={profileLink}><img src={image ? `${MEDIA_URL}${image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-full h-full rounded-full" /></Link>
+                <Link to={profileLink} className="lg:text-lg truncate">{username}</Link>
             </div>
             {!my_profile && <Button variant={following ? "outline" : "default"} className="w-26 lg:w-28 rounded-full" disabled={loading} onClick={following ? handleUnFollowBtnClick : handleFollowBtnClick}>{loading ? <Spinner /> : following ? "Unfollow" : "Follow"}</Button>}
         </div>

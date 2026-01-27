@@ -54,6 +54,8 @@ const ProfileHome = () => {
           cover_image={e.cover_image}
           topic={e.topic.name}
           topic_id={e.topic.id}
+          likes_count={e.likes_count}
+          comments_count={e.comments_count}
           key={e.id}
         />)}
       </div>

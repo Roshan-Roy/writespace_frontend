@@ -11,19 +11,24 @@ import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { Dot } from "lucide-react"
 import { FaRegHeart, FaHeart, FaRegComment, FaRegBookmark, FaBookmark } from "react-icons/fa"
+import { useAuth } from "@/contexts/AuthContext"
+import LikesModal from "@/components/mycomponents/modals/likesModal/LikesModal"
+import sortedProfiles from "@/lib/sortedProfiles"
 
 const Story = () => {
   const { story_id } = useParams()
+  const { auth: { user } } = useAuth()
   const [data, setData] = useState(null)
   const [pageLoading, setPageLoading] = useState(true)
   const [pageError, setPageError] = useState(false)
   const [notFound, setNotFound] = useState(false)
   const [followLoading, setFollowLoading] = useState(false)
-  const [saving, setSaving] = useState(false)
+  const [saveLoading, setSaveLoading] = useState(false)
+  const [likeLoading, setLikeLoading] = useState(false)
 
   const handleSaveStory = async () => {
-    if (saving) return
-    setSaving(true)
+    if (saveLoading) return
+    setSaveLoading(true)
 
     try {
       setData(prev => ({ ...prev, is_saved: true }))
@@ -31,13 +36,13 @@ const Story = () => {
     } catch (e) {
       setData(prev => ({ ...prev, is_saved: false }))
     } finally {
-      setSaving(false)
+      setSaveLoading(false)
     }
   }
 
   const handleUnSaveStory = async () => {
-    if (saving) return
-    setSaving(true)
+    if (saveLoading) return
+    setSaveLoading(true)
 
     try {
       setData(prev => ({ ...prev, is_saved: false }))
@@ -45,7 +50,49 @@ const Story = () => {
     } catch (e) {
       setData(prev => ({ ...prev, is_saved: true }))
     } finally {
-      setSaving(false)
+      setSaveLoading(false)
+    }
+  }
+
+  const addLike = () => {
+    setData(prevData => ({
+      ...prevData,
+      likes: [{ id: user.id, image: user.image, username: user.username, is_following: false }, ...prevData.likes]
+    }))
+  }
+
+  const removelike = () => {
+    setData(prevData => ({
+      ...prevData,
+      likes: prevData.likes.filter(like => like.id !== user.id)
+    }))
+  }
+
+  const handleLikeStory = async () => {
+    if (likeLoading) return
+    setLikeLoading(true)
+
+    try {
+      addLike()
+      await api.post(`like/${story_id}/`)
+    } catch (e) {
+      removelike()
+    } finally {
+      setLikeLoading(false)
+    }
+  }
+
+  const handleUnLikeStory = async () => {
+    if (likeLoading) return
+    setLikeLoading(true)
+
+    try {
+      removelike()
+      await api.delete(`like/${story_id}/`)
+    } catch (e) {
+      addLike()
+    } finally {
+      setLikeLoading(false)
     }
   }
 
@@ -62,11 +109,10 @@ const Story = () => {
         created_at: data.story.created_at,
         cover_image: data.story.cover_image,
         content: data.story.content,
-        likes: data.likes,
+        likes: sortedProfiles(data.likes, user.id),
         comments: data.comments,
         is_saved: data.is_saved
       })
-      console.log(response.data)
     } catch (e) {
       const status = e.response?.status
       if (status === 404) {
@@ -112,8 +158,8 @@ const Story = () => {
       <div className="flex justify-between items-center text-foreground/80 py-4.5 px-2 mt-4 lg:mt-6 border-y">
         <div className="flex gap-6 items-center">
           <div className="flex items-center gap-2.5">
-            <FaRegHeart className="text-2xl" />
-            <span>{data.likes.length}</span>
+            {data.likes.some(like => like.id === user.id) ? <FaHeart className="text-2xl" onClick={handleUnLikeStory} /> : <FaRegHeart className="text-2xl" onClick={handleLikeStory} />}
+            <LikesModal data={data.likes} setData={setData}>{data.likes.length}</LikesModal>
           </div>
           <div className="flex items-center gap-2.5">
             <FaRegComment className="text-2xl" />

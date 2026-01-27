@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import api from "@/api/api"
 import StoryCardSkeleton from "@/components/mycomponents/storyCards/StoryCardSkeleton"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
-import { ConfirmDeleteModal } from "@/components/mycomponents/modals/confirmDeleteModal/ConfirmDeleteModal"
+import ConfirmDeleteModal from "@/components/mycomponents/modals/confirmDeleteModal/ConfirmDeleteModal"
 import NoItemsPage from "@/components/mycomponents/noItemsPage/NoItemsPage"
 import { PencilOff } from "lucide-react"
 

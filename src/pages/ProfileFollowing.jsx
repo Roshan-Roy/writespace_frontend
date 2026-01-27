@@ -16,6 +16,7 @@ import { useAuth } from "@/contexts/AuthContext"
 import { useParams } from "react-router"
 import { Navigate } from "react-router"
 import NotFoundPage from "@/components/mycomponents/notFoundPage/NotFoundPage"
+import sortedProfiles from "@/lib/sortedProfiles"
 
 const ProfileFollowing = () => {
   const { auth: { user } } = useAuth()
@@ -28,27 +29,11 @@ const ProfileFollowing = () => {
 
   const profileLink = `/profile/${profile_id}/`
 
-  const sortedData = (data) => {
-    const myProfile = []
-    const following = []
-    const notFollowing = []
-    data.forEach(e => {
-      if (e.id === user.id) {
-        myProfile.push(e)
-      } else if (e.is_following) {
-        following.push(e)
-      } else {
-        notFollowing.push(e)
-      }
-    })
-    return [...myProfile, ...following, ...notFollowing]
-  }
-
   const getFollowingAndUsername = async () => {
     try {
       const response = await api.get(`following/${profile_id}/`)
       setUsername(response.data.username)
-      setData(sortedData(response.data.data))
+      setData(sortedProfiles(response.data.data, user.id))
     } catch (e) {
       const status = e.response?.status
       if (status === 404) {
