@@ -13,9 +13,9 @@ const LikesModal = ({ children, data, setData }) => {
     const { auth: { user } } = useAuth()
 
     const handleFollowId = (id) => {
-        setData(prev => ({
-            ...prev,
-            likes: prev.likes.map(profile =>
+        setData(prevData => ({
+            ...prevData,
+            likes: prevData.likes.map(profile =>
                 profile.id === id
                     ? { ...profile, is_following: true }
                     : profile
@@ -24,9 +24,9 @@ const LikesModal = ({ children, data, setData }) => {
     }
 
     const handleUnfollowId = (id) => {
-        setData(prev => ({
-            ...prev,
-            likes: prev.likes.map(profile =>
+        setData(prevData => ({
+            ...prevData,
+            likes: prevData.likes.map(profile =>
                 profile.id === id
                     ? { ...profile, is_following: false }
                     : profile

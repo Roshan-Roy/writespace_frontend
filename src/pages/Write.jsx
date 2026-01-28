@@ -186,8 +186,8 @@ const Write = () => {
               )}
             </div>
             <input type="file" id="cover_image" className="hidden" onChange={e => handleInputChange(e.target.files[0], "cover_image")} />
-            <Textarea placeholder="Write a preview title" className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent mb-1 text-lg font-bold min-h-0 px-0 break-all" value={data.prev_title} onChange={e => handleInputChange(e.target.value, "prev_title")} />
-            <Textarea placeholder="Write a preview subtitle..." className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent min-h-0 text-sm mb-2 lg:mb-3 px-0 break-all" value={data.prev_subtitle} onChange={e => handleInputChange(e.target.value, "prev_subtitle")} />
+            <Textarea placeholder="Write a preview title" className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent mb-1 text-lg font-bold min-h-0 px-0 wrap-anywhere" value={data.prev_title} onChange={e => handleInputChange(e.target.value, "prev_title")} />
+            <Textarea placeholder="Write a preview subtitle..." className="shadow-none h-auto border-0 border-b-2 rounded-none dark:bg-transparent min-h-0 text-sm mb-2 lg:mb-3 px-0 wrap-anywhere" value={data.prev_subtitle} onChange={e => handleInputChange(e.target.value, "prev_subtitle")} />
             <p className="text-xs lg:text-sm text-muted-foreground leading-relaxed"><span className="font-semibold">Note :</span> Changes here only affect how your story appears in previews, not the actual content.</p>
           </div>
           <div className="sm:flex-1">
@@ -222,7 +222,7 @@ const Write = () => {
       <div className="h-[calc(100dvh-128px)] lg:h-[calc(100dvh-136px)] py-6 md:py-8 lg:py-10 overflow-y-auto">
         <div className="w-17/20 max-w-4xl mx-auto flex flex-col gap-0.5 lg:gap-1.5">
           <Textarea type="text" placeholder="Title" className="dark:bg-transparent border-none shadow-none text-3xl md:text-4xl lg:text-5xl min-h-0 font-heading leading-relaxed" value={data.title} onChange={e => handleInputChange(e.target.value, "title")} />
-          <Textarea placeholder="Tell your story..." className="dark:bg-transparent text-lg md:text-xl lg:text-2xl border-none shadow-none min-h-0 leading-relaxed" value={data.content} onChange={e => handleInputChange(e.target.value, "content")} />
+          <Textarea placeholder="Tell your story..." className="dark:bg-transparent text-lg md:text-xl lg:text-2xl border-none shadow-none min-h-0 leading-loose" value={data.content} onChange={e => handleInputChange(e.target.value, "content")} />
         </div>
       </div>
       <div className="absolute flex bottom-0 right-0 h-14 lg:h-16 border-t bg-background w-full items-center justify-center">
