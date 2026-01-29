@@ -2,9 +2,13 @@ import { Link, NavLink } from "react-router"
 import { Menu, Bell, SquarePen } from "lucide-react"
 import NavProfile from "./navProfile/NavProfile"
 import { useLayout } from "@/contexts/LayoutContext"
+import { useNotifications } from "@/contexts/NotificationContext"
 
 const PrivateNavbar = () => {
   const { setSidebarOpen } = useLayout()
+  const { count } = useNotifications()
+
+  const notificationsCount = count > 9 ? "9+" : count === 0 ? null : count
 
   const handleToggleSidebar = () => {
     setSidebarOpen(e => !e)
@@ -22,8 +26,9 @@ const PrivateNavbar = () => {
             <SquarePen />
             <span className="text-sm">Write</span>
           </NavLink>
-          <NavLink to="/notifications" className={({ isActive }) => `hidden lg:block ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+          <NavLink to="/notifications" className={({ isActive }) => `hidden lg:block relative ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
             <Bell />
+            {notificationsCount && <span className="text-[8px] font-semibold bg-red-600 text-white w-4 h-4 rounded-full absolute top-0 right-0 translate-x-1.5 -translate-y-1.5 flex justify-center items-center">{notificationsCount}</span>}
           </NavLink>
           <NavProfile />
         </div>

@@ -4,6 +4,7 @@ import PrivateNavbar from "../navbars/PrivateNavbar"
 import { useAuth } from "@/contexts/AuthContext"
 import { LayoutProvider } from "@/contexts/LayoutContext"
 import SidebarWrapper from "../sidebarWrapper/SidebarWrapper"
+import { NotificationProvider } from "@/contexts/NotificationContext"
 
 
 const MainLayout = () => {
@@ -20,10 +21,12 @@ const MainLayout = () => {
 
   return (
     <LayoutProvider>
-      <PrivateNavbar />
-      <SidebarWrapper>
-        <Outlet />
-      </SidebarWrapper>
+      <NotificationProvider>
+        <PrivateNavbar />
+        <SidebarWrapper>
+          <Outlet />
+        </SidebarWrapper>
+      </NotificationProvider>
     </LayoutProvider>
   )
 }
