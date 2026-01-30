@@ -7,12 +7,16 @@ import { Separator } from "@/components/ui/separator"
 import ToggleThemeButtonNavbar from "../../switchThemeButtons/ToggleThemeButtonNavbar"
 import SignoutButton from "../../signoutButton/SignoutButton"
 import { useAuth } from "@/contexts/AuthContext"
+import { useNotifications } from "@/contexts/NotificationContext"
 
 const NavProfile = () => {
     const { auth: { user } } = useAuth()
+    const { count } = useNotifications()
     const { setSidebarOpen } = useLayout()
     const [profileOpen, setProfileOpen] = useState(false)
     const profileDropDownRef = useRef(null)
+
+    const notificationsCount = count > 9 ? "9+" : count === 0 ? null : count
 
     const handleOpenProfileWithSidebarClose = () => {
         setProfileOpen(true)
@@ -75,7 +79,10 @@ const NavProfile = () => {
                     <span>Write</span>
                 </Link>
                 <Link className="lg:hidden flex gap-4 items-center px-6 py-2 text-foreground/70 hover:text-foreground" onClick={handleCloseProfile} to="/notifications">
-                    <Bell />
+                    <span className="relative">
+                        <Bell />
+                        {notificationsCount && <span className="text-[8px] font-semibold bg-red-600 text-white w-4 h-4 rounded-full absolute top-0 right-0 translate-x-1.5 -translate-y-1.5 flex justify-center items-center">{notificationsCount}</span>}
+                    </span>
                     <span>Notifications</span>
                 </Link>
                 <Separator className="mt-4 lg:mt-0" />
@@ -83,7 +90,7 @@ const NavProfile = () => {
                 <Separator />
                 <SignoutButton email={user.email} />
             </div>
-        </div>
+        </div >
     )
 }
 

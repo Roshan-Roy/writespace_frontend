@@ -35,10 +35,9 @@ const ProfileHome = () => {
 
   if (pageLoading) return (
     <div className="pb-15">
-      <StoryCardSkeleton />
-      <StoryCardSkeleton />
-      <StoryCardSkeleton />
-      <StoryCardSkeleton />
+      {Array.from({ length: 4 }, (_, i) => (
+        <StoryCardSkeleton key={i} />
+      ))}
     </div>
   )
   if (pageError) return <ErrorPage retryFn={handleReloadData} className="h-auto py-18 md:py-20" />

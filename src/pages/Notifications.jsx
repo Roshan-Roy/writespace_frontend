@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
 import api from "@/api/api"
-import StoryCardSkeleton from "@/components/mycomponents/storyCards/StoryCardSkeleton"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 import NoItemsPage from "@/components/mycomponents/noItemsPage/NoItemsPage"
 import { BellOff } from "lucide-react"
 import NotificationCard from "@/components/mycomponents/notificationCard/NotificationCard"
-import { Skeleton } from "@/components/ui/skeleton"
 import { useNotifications } from "@/contexts/NotificationContext"
+import NotificationCardSkeleton from "@/components/mycomponents/notificationCard/NotificationCardSkeleton"
 
 const Notifications = () => {
   const { clearCount } = useNotifications()
@@ -25,7 +24,6 @@ const Notifications = () => {
         await api.delete("notifications/")
         clearCount()
       }
-
     } catch (e) {
       setPageError(true)
     } finally {
@@ -45,14 +43,10 @@ const Notifications = () => {
 
   if (pageLoading) return (
     <div className="mx-auto w-17/20 max-w-4xl">
-      <div className="pt-6 lg:pt-10">
-        <Skeleton className="h-7.5 sm:h-9 lg:h-12 w-42" />
-      </div>
-      <div className="sm:pt-1 lg:pt-2.5 pb-30">
-        <StoryCardSkeleton />
-        <StoryCardSkeleton />
-        <StoryCardSkeleton />
-        <StoryCardSkeleton />
+      <div className="pt-6 lg:pt-10 pb-16 lg:pb-20 flex flex-col gap-2">
+        {Array.from({ length: 10 }, (_, i) => (
+          <NotificationCardSkeleton key={i} />
+        ))}
       </div>
     </div>
   )

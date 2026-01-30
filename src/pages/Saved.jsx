@@ -38,10 +38,9 @@ const Saved = () => {
         <Skeleton className="h-7.5 sm:h-9 lg:h-12 w-42" />
       </div>
       <div className="sm:pt-1 lg:pt-2.5 pb-30">
-        <StoryCardSkeleton />
-        <StoryCardSkeleton />
-        <StoryCardSkeleton />
-        <StoryCardSkeleton />
+        {Array.from({ length: 4 }, (_, i) => (
+          <StoryCardSkeleton key={i} />
+        ))}
       </div>
     </div>
   )
