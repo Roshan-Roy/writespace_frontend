@@ -28,7 +28,7 @@ const PrivateNavbar = () => {
           </NavLink>
           <NavLink to="/notifications" className={({ isActive }) => `hidden lg:block relative ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
             <Bell />
-            {notificationsCount && <span className="text-[8px] font-semibold bg-red-600 text-white w-4 h-4 rounded-full absolute top-0 right-0 translate-x-1.5 -translate-y-1.5 flex justify-center items-center">{notificationsCount}</span>}
+            {notificationsCount && <span className="text-[9px] font-semibold bg-red-600 text-white w-4 h-4 rounded-full absolute top-0 right-0 translate-x-1.5 -translate-y-1.5 flex justify-center items-center">{notificationsCount}</span>}
           </NavLink>
           <NavProfile />
         </div>

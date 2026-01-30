@@ -5,15 +5,16 @@ import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 import NoItemsPage from "@/components/mycomponents/noItemsPage/NoItemsPage"
 import { PencilOff } from "lucide-react"
 import StoryCard from "@/components/mycomponents/storyCards/StoryCard"
+import { Skeleton } from "@/components/ui/skeleton"
 
-const Home = () => {
+const Following = () => {
   const [data, setData] = useState([])
   const [pageLoading, setPageLoading] = useState(true)
   const [pageError, setPageError] = useState(false)
 
-  const getAllStories = async () => {
+  const getFollowingStories = async () => {
     try {
-      const response = await api.get("stories/")
+      const response = await api.get("stories_following/")
       setData(response.data.data)
     } catch (e) {
       setPageError(true)
@@ -24,16 +25,19 @@ const Home = () => {
   const handleReloadData = () => {
     setPageError(false)
     setPageLoading(true)
-    getAllStories()
+    getFollowingStories()
   }
 
   useEffect(() => {
-    getAllStories()
+    getFollowingStories()
   }, [])
 
   if (pageLoading) return (
     <div className="mx-auto w-17/20 max-w-4xl">
-      <div className="pt-2 md:pt-4 lg:pt-6 pb-30">
+      <div className="pt-6 lg:pt-10">
+        <Skeleton className="h-7.5 sm:h-9 lg:h-12 w-46" />
+      </div>
+      <div className="sm:pt-1 lg:pt-2.5 pb-30">
         {Array.from({ length: 4 }, (_, i) => (
           <StoryCardSkeleton key={i} />
         ))}
@@ -44,7 +48,10 @@ const Home = () => {
   if (data.length === 0) return <NoItemsPage icon={PencilOff} message="No stories" className="h-[calc(100dvh-56px)]" />
   return (
     <div className="mx-auto w-17/20 max-w-4xl">
-      <div className="pt-2 md:pt-4 lg:pt-6 pb-30">
+      <div className="pt-6 lg:pt-10">
+        <span className="font-semibold text-3xl sm:text-4xl lg:text-5xl">Following</span>
+      </div>
+      <div className="sm:pt-1 lg:pt-2.5 pb-30">
         {data.map(e => <StoryCard
           id={e.id}
           prev_title={e.prev_title}
@@ -66,4 +73,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Following

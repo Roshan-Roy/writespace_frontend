@@ -27,6 +27,7 @@ import ProfileFollowers from "./pages/ProfileFollowers"
 import Topics from "./pages/topics"
 import Topic from "./pages/Topic"
 import Story from "./pages/Story"
+import Following from "./pages/Following"
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
         element: <ProtectedRoutes />,
         children: [
           { path: "saved", element: <Saved /> },
+          { path: "following", element: <Following /> },
           {
             path: "my_profile",
             element: <MyProfile />,

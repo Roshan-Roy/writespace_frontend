@@ -81,7 +81,7 @@ const NavProfile = () => {
                 <Link className="lg:hidden flex gap-4 items-center px-6 py-2 text-foreground/70 hover:text-foreground" onClick={handleCloseProfile} to="/notifications">
                     <span className="relative">
                         <Bell />
-                        {notificationsCount && <span className="text-[8px] font-semibold bg-red-600 text-white w-4 h-4 rounded-full absolute top-0 right-0 translate-x-1.5 -translate-y-1.5 flex justify-center items-center">{notificationsCount}</span>}
+                        {notificationsCount && <span className="text-[9px] font-semibold bg-red-600 text-white w-4 h-4 rounded-full absolute top-0 right-0 translate-x-1.5 -translate-y-1.5 flex justify-center items-center">{notificationsCount}</span>}
                     </span>
                     <span>Notifications</span>
                 </Link>

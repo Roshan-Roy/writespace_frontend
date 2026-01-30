@@ -1,10 +1,15 @@
-import { Home, Bookmark, User, Compass } from "lucide-react";
+import { Home, Bookmark, User, Compass, Users } from "lucide-react";
 
 const sidebarLinks = [
     {
         label: "Home",
         route: "/",
         icon: Home,
+    },
+    {
+        label: "Following",
+        route: "/following",
+        icon: Users,
     },
     {
         label: "Saved",
