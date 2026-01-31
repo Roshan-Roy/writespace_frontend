@@ -85,8 +85,13 @@ const Profile = () => {
     }
 
     useEffect(() => {
+        setPageLoading(true)
+        setPageError(false)
+        setNotFound(false)
+        setData(null)
+
         getProfileData()
-    }, [])
+    }, [profile_id])
 
     if (Number(profile_id) === user.id) return <Navigate to="/my_profile" replace />
     if (pageLoading) return <LoadingPage className="h-[calc(100dvh-56px)]" />
