@@ -164,13 +164,39 @@ const Story = () => {
     }
   }
 
+  const handleFollowBtnClick = async () => {
+    try {
+      setFollowLoading(true)
+      await api.post(`follow/${data.profile_id}/`)
+      setData(prevData => ({ ...prevData, is_following_author: true }))
+    } catch (e) {
+      toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
+    } finally {
+      setFollowLoading(false)
+    }
+  }
+
+  const handleUnFollowBtnClick = async () => {
+    try {
+      setFollowLoading(true)
+      await api.delete(`follow/${data.profile_id}/`)
+      setData(prevData => ({ ...prevData, is_following_author: false }))
+    } catch (e) {
+      toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
+    } finally {
+      setFollowLoading(false)
+    }
+  }
+
   const getStory = async () => {
     try {
       const response = await api.get(`story_details/${story_id}/`)
       const data = response.data.data
       setData({
         topic: data.story.topic_details.name,
+        topic_id: data.story.topic_details.id,
         title: data.story.title,
+        profile_id: data.story.profile.id,
         profile_image: data.story.profile.image,
         username: data.story.profile.username,
         is_following_author: data.is_following_author,
@@ -209,16 +235,16 @@ const Story = () => {
     <>
       <div className="mx-auto w-17/20 max-w-4xl">
         <div className="flex flex-col gap-3 lg:gap-4 pt-6 lg:pt-10">
-          <span className="text-foreground/70 lg:text-lg">In {data.topic}</span>
+          <span className="text-foreground/70 lg:text-lg">In <Link to={`/topic/${data.topic_id}`}>{data.topic}</Link></span>
           <p className="text-3xl md:text-4xl lg:text-5xl leading-relaxed font-heading wrap-anywhere">{data.title}</p>
         </div>
         <p className="text-foreground/70 my-2 md:hidden">{formatDate(data.created_at)}</p>
         <div className="flex items-center justify-between gap-4 md:gap-8 py-2 md:mt-2 md:justify-start">
           <div className="flex items-center gap-4 lg:gap-5 min-w-0">
-            <img src={data.profile_image ? `${MEDIA_URL}${data.profile_image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-12 lg:w-14 h-12 lg:h-14 rounded-full" />
-            <span className="truncate lg:text-lg">{data.username}</span>
+            <Link to={`/profile/${data.profile_id}`} className="w-12 lg:w-14 h-12 lg:h-14 shrink-0" ><img src={data.profile_image ? `${MEDIA_URL}${data.profile_image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-full h-full object-cover rounded-full" /></Link>
+            <Link to={`/profile/${data.profile_id}`} className="truncate lg:text-lg">{data.username}</Link>
           </div>
-          <Button variant="outline" className="w-28 md:w-32 rounded-full" disabled={followLoading}>{followLoading ? <Spinner /> : data.is_following_author ? "Unfollow" : "Follow"}</Button>
+          {user.id !== data.profile_id && <Button variant="outline" className="w-28 md:w-32 rounded-full" onClick={data.is_following_author ? handleUnFollowBtnClick : handleFollowBtnClick} disabled={followLoading}>{followLoading ? <Spinner /> : data.is_following_author ? "Unfollow" : "Follow"}</Button>}
           <div className="hidden md:flex items-center gap-1">
             <Dot />
             <p className="text-foreground/70 lg:text-lg">{formatDate(data.created_at)}</p>
@@ -254,11 +280,11 @@ const Story = () => {
           <div className="pt-12 lg:pt-14 pb-10 lg:pb-12 border-b">
             <span className="font-semibold text-2xl lg:text-3xl">{data.comments.length} {data.comments.length === 1 ? "Response" : "Responses"}</span>
             <div className="flex items-center gap-3 lg:gap-4 pt-8 lg:pt-10">
-              <img src={user.image ? `${MEDIA_URL}${user.image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-10 lg:w-12 h-10 lg:h-12 rounded-full" />
+              <img src={user.image ? `${MEDIA_URL}${user.image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-10 lg:w-12 h-10 lg:h-12 object-cover rounded-full" />
               <span className="truncate lg:text-lg">{user.username}</span>
             </div>
             <div className="mt-3 lg:mt-4 bg-muted p-4 lg:p-6 rounded-sm">
-              <Textarea placeholder="What are your thoughts?" className="shadow-none h-auto border-none lg:text-lg min-h-0 p-0 leading-relaxed" value={responseData} onChange={e => handleResponseDataChange(e.target.value)} />
+              <Textarea placeholder="What are your thoughts?" className="shadow-none h-auto border-none lg:text-lg min-h-0 p-0 leading-relaxed dark:bg-transparent" value={responseData} onChange={e => handleResponseDataChange(e.target.value)} />
               <div className="pt-6 flex justify-end">
                 <Button className="rounded-full w-26 lg:w-28 lg:h-10" onClick={handleAddResponse} disabled={respondBtnDisabled || responseLoading}>{responseLoading ? <Spinner /> : "Respond"}</Button>
               </div>

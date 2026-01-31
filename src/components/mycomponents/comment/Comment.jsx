@@ -36,7 +36,7 @@ const Comment = ({ id, profile, content, removeResponse, created_at, my_comment 
         <div className="border-b py-8 lg:py-10">
             <div className="flex justify-between items-center gap-4">
                 <div className="flex items-center gap-3 lg:gap-4 min-w-0">
-                    <Link to={profileLink} className="block self-start w-10 lg:w-12 aspect-square shrink-0"><img src={profile.image ? `${MEDIA_URL}${profile.image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-full h-full rounded-full" /></Link>
+                    <Link to={profileLink} className="block self-start w-10 lg:w-12 h-10 lg:h-12 shrink-0"><img src={profile.image ? `${MEDIA_URL}${profile.image}` : "/images/default_avatar.jpg"} alt="profile picture" className="w-full h-full rounded-full object-cover" /></Link>
                     <div className="flex flex-col gap-0.5 min-w-0">
                         <Link to={profileLink} className="lg:text-lg truncate">{profile.username}</Link>
                         <span className="text-xs lg:text-sm text-foreground/60 truncate">{formatDate(created_at)}</span>

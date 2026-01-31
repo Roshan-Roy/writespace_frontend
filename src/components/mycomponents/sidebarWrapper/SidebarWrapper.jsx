@@ -2,6 +2,7 @@ import SidebarLink from "./sidebarLink/SidebarLink"
 import sidebarLinks from "@/constants/sidebarLinks"
 import { useLayout } from "@/contexts/LayoutContext"
 import { useEffect } from "react"
+import SidebarFollowing from "../sidebarFollowing/SidebarFollowing"
 
 const SidebarWrapper = ({ children }) => {
     const { sidebarOpen, setSidebarOpen } = useLayout()
@@ -37,6 +38,9 @@ const SidebarWrapper = ({ children }) => {
             <div className={`bg-background lg:border-r h-[calc(100dvh-56px)] fixed z-40 top-14 left-0 w-60 transition-all shadow-xl lg:shadow-none dark:shadow-none overflow-y-auto box-content ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
                 <div className="flex flex-col gap-6 pt-8 pb-12 px-2">
                     {sidebarLinks.map(e => <SidebarLink key={e.route} {...e} />)}
+                </div>
+                <div className="px-7.5">
+                    <SidebarFollowing />
                 </div>
             </div>
             <div className={`lg:transition-all ${sidebarOpen ? "lg:ml-[calc(15rem+1px)]" : "lg:ml-0"}`}>
