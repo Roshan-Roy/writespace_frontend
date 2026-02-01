@@ -28,6 +28,10 @@ import Topics from "./pages/topics"
 import Topic from "./pages/Topic"
 import Story from "./pages/Story"
 import Following from "./pages/Following"
+import SearchLayout from "./pages/SearchLayout"
+import SearchStories from "./pages/SearchStories"
+import SearchUsers from "./pages/SearchUsers"
+import SearchTopics from "./pages/SearchTopics"
 
 const router = createBrowserRouter([
   {
@@ -67,7 +71,16 @@ const router = createBrowserRouter([
           { path: "followers/:profile_id", element: <ProfileFollowers /> },
           { path: "topics", element: <Topics /> },
           { path: "topic/:topic_id", element: <Topic /> },
-          { path: "story/:story_id", element: <Story /> }
+          { path: "story/:story_id", element: <Story /> },
+          {
+            path: "search",
+            element: <SearchLayout />,
+            children: [
+              { index: true, element: <SearchStories /> },
+              { path: "users", element: <SearchUsers /> },
+              { path: "topics", element: <SearchTopics /> }
+            ]
+          }
         ]
       }
     ]

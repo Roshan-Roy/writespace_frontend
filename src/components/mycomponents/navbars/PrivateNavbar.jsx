@@ -1,12 +1,17 @@
 import { Link, NavLink } from "react-router"
-import { Menu, Bell, SquarePen } from "lucide-react"
+import { Menu, Bell, SquarePen, SearchIcon } from "lucide-react"
 import NavProfile from "./navProfile/NavProfile"
 import { useLayout } from "@/contexts/LayoutContext"
 import { useNotifications } from "@/contexts/NotificationContext"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
+import { useState } from "react"
+import { useNavigate } from "react-router"
 
 const PrivateNavbar = () => {
   const { setSidebarOpen } = useLayout()
   const { count } = useNotifications()
+  const [query, setQuery] = useState("")
+  const navigate = useNavigate()
 
   const notificationsCount = count > 9 ? "9+" : count === 0 ? null : count
 
@@ -14,12 +19,36 @@ const PrivateNavbar = () => {
     setSidebarOpen(e => !e)
   }
 
+  const handleSearch = (e) => {
+    e.preventDefault()
+
+    const trimmedQuery = query.trim()
+
+    if (!trimmedQuery) {
+      navigate("/search")
+      return
+    }
+
+    navigate(`/search?q=${encodeURIComponent(trimmedQuery)}`)
+  }
+
+
   return (
     <>
-      <div className="fixed z-50 top-0 w-full h-14 border-b flex bg-background pl-8 pr-6 lg:pr-8 justify-between">
-        <div className="flex items-center gap-4">
-          <Menu className="text-muted-foreground" onClick={handleToggleSidebar} />
-          <Link to="/" className="font-logo text-3xl">Writespace</Link>
+      <div className="fixed z-50 top-0 w-full h-14 border-b flex bg-background pl-8 pr-6 lg:pr-8 justify-between gap-1">
+        <div className="flex items-center gap-4 min-w-0">
+          <Menu className="text-muted-foreground shrink-0" onClick={handleToggleSidebar} />
+          <Link to="/" className="font-logo text-3xl truncate">Writespace</Link>
+          <div className="hidden md:block ml-6 w-60">
+            <form onSubmit={handleSearch}>
+              <InputGroup className="rounded-full">
+                <InputGroupInput placeholder="Search" value={query} onChange={(e) => setQuery(e.target.value)} />
+                <InputGroupAddon>
+                  <SearchIcon />
+                </InputGroupAddon>
+              </InputGroup>
+            </form>
+          </div>
         </div>
         <div className="flex items-center gap-8">
           <NavLink to="/write" className={({ isActive }) => `hidden lg:flex items-center gap-2 ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
@@ -30,7 +59,10 @@ const PrivateNavbar = () => {
             <Bell />
             {notificationsCount && <span className="text-[9px] font-semibold bg-red-600 text-white w-4 h-4 rounded-full absolute top-0 right-0 translate-x-1.5 -translate-y-1.5 flex justify-center items-center">{notificationsCount}</span>}
           </NavLink>
-          <NavProfile />
+          <div className="flex items-center gap-5">
+            <NavLink to="/search" className={({ isActive }) => `md:hidden ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}><SearchIcon /></NavLink>
+            <NavProfile />
+          </div>
         </div>
       </div>
       <div className="h-14"></div>
