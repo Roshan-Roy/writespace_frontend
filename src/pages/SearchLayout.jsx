@@ -1,11 +1,10 @@
-import { Outlet, useSearchParams, useNavigate } from "react-router"
+import { Outlet, useSearchParams } from "react-router"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
 import { SearchIcon } from "lucide-react"
 import { useState, useEffect } from "react"
 
 
 const SearchLayout = () => {
-  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const searchTerm = searchParams.get("q")
   const [recentSearches, setRecentSearches] = useState([])
