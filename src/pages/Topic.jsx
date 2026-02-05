@@ -1,7 +1,7 @@
 import { Link } from "react-router"
 import { useEffect, useState } from "react"
 import api from "@/api/api"
-import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
+import { Skeleton } from "@/components/ui/skeleton"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 import {
     Breadcrumb,
@@ -14,6 +14,7 @@ import {
 import { useParams } from "react-router"
 import NotFoundPage from "@/components/mycomponents/notFoundPage/NotFoundPage"
 import StoryCard from "@/components/mycomponents/storyCards/StoryCard"
+import StoryCardSkeleton from "@/components/mycomponents/storyCards/StoryCardSkeleton"
 
 const Topic = () => {
     const { topic_id } = useParams()
@@ -50,7 +51,19 @@ const Topic = () => {
         getTopicAndStories()
     }, [])
 
-    if (loading) return <LoadingPage className="h-[calc(100dvh-56px)]" />
+    if (loading) return (
+        <div className="mx-auto w-17/20 max-w-4xl">
+            <div className="pt-6 lg:pt-10">
+                <Skeleton className="h-5 lg:h-6 mb-4 lg:mb-6 w-48" />
+                <Skeleton className="h-30 sm:h-42.5 w-full rounded-2xl" />
+            </div>
+            <div className="pb-30">
+                {Array.from({ length: 4 }, (_, i) => (
+                    <StoryCardSkeleton key={i} />
+                ))}
+            </div>
+        </div>
+    )
     if (error) return <ErrorPage className="h-[calc(100dvh-56px)]" retryFn={handleReloadData} />
     if (notFound) return <NotFoundPage message="Topic not found" />
     return (
