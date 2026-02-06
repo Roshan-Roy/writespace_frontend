@@ -1,4 +1,4 @@
-import SidebarFollowingCard from "./sidebarFollowingCard/sidebarFollowingCard"
+import SidebarFollowingCard from "./sidebarFollowingCard/SidebarFollowingCard"
 import { Link } from "react-router"
 import { useEffect, useState } from "react"
 import api from "@/api/api"
