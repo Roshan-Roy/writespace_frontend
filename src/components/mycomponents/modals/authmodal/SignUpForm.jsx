@@ -10,7 +10,7 @@ import axios from "axios"
 import { Spinner } from "@/components/ui/spinner"
 import toast from "react-hot-toast"
 import { CircleCheck, CircleX, EyeOff, Eye } from "lucide-react"
-import CustomToast from "@/components/mycomponents/toast/Customtoast"
+import CustomToast from "../../toast/CustomToast"
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "@/components/ui/input-group"
 
 const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
