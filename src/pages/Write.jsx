@@ -147,7 +147,7 @@ const Write = () => {
       initialPrevFilled.current = true
     }
   }, [modalOpen])
-  console.log(data)
+ 
   useEffect(() => {
     isActiveRef.current = true
     getAllTopics()
