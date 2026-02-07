@@ -43,7 +43,7 @@ This project was built to demonstrate real-world frontend architecture, API inte
 - React Router
 - Context API
 - Axios
-- Tailwind CSS / Shadcn UI
+- Tailwind CSS + Shadcn UI
 
 **Backend**
 - Django
