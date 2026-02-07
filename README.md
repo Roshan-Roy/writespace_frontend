@@ -27,9 +27,11 @@ This project was built to demonstrate real-world frontend architecture, API inte
 - Topic-based content discovery
 - Like, comment & save system
 - Follow writers
+- Notifications for user interactions
+- Search functionality to discover posts, users and topics
 - User profile with published posts
 - Responsive UI for all devices
-- Protected routes and role-based access
+- Protected routes
 - Integrated with a REST API backend
 
 ---
