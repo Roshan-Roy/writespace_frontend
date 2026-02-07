@@ -1,16 +1,54 @@
-# React + Vite
+# WriteSpace ✍️  
+A modern content publishing platform built with React that enables users to write, explore, and engage with meaningful stories.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🌐 Live Demo
+🔗 https://writespace-frontend.vercel.app/
 
-Currently, two official plugins are available:
+**Demo Credentials**
+- **Username:** writespace  
+- **Password:** 12345678  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> Note: This project is deployed using free-tier services. Initial load may take a few seconds.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📌 About the Project
+WriteSpace is a full-stack blogging and social writing platform inspired by real-world content platforms.  
+It allows users to create accounts, publish articles with media, explore topics, follow writers, and interact with content in a clean and responsive interface.
 
-## Expanding the ESLint configuration
+This project was built to demonstrate real-world frontend architecture, API integration, authentication handling, and state management.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ✨ Key Features
+- User Authentication – Secure login and registration with email verification and forgot password flows
+- Create, edit, and delete articles
+- Image/media support for posts
+- Topic-based content discovery
+- Like, comment & save system
+- Follow writers
+- User profile with published posts
+- Responsive UI for all devices
+- Protected routes and role-based access
+- Integrated with a REST API backend
+
+---
+
+## 🛠️ Tech Stack
+**Frontend**
+- React
+- React Router
+- Context API
+- Axios
+- CSS / Modern UI practices
+
+**Backend**
+- Django
+- Django REST Framework
+- PostgreSQL
+- Token-based authentication
+
+**Deployment**
+- **Frontend:** Deployed on **Vercel**
+- **Backend & Database:** Deployed on **Render** (free-tier services)
+
