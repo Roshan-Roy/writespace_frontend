@@ -12,8 +12,10 @@ import CustomToast from "@/components/mycomponents/toast/CustomToast"
 import { CircleX, MailCheck } from "lucide-react"
 import axios from "axios"
 import { API_URL } from "@/lib/urls"
+import { useVerificationModal } from "@/contexts/VerificationModalContext"
 
 const ForgotPassword = () => {
+  const { setVerificationModalData } = useVerificationModal()
   const [data, setData] = useState({
     email: ""
   })
@@ -24,8 +26,16 @@ const ForgotPassword = () => {
   const forgotPassword = async (data) => {
     try {
       setLoading(true)
-      await axios.post(`${API_URL}forgot_password/`, data)
+      const response = await axios.post(`${API_URL}forgot_password/`, data)
+      const forgotPasswordData = response.data.data
       setEmailSent(true)
+      setVerificationModalData({
+        email_subject: "Reset your WriteSpace password",
+        email_body: "Click this link to reset your password:",
+        email_to: forgotPasswordData.email_to,
+        link: forgotPasswordData.password_reset_url,
+        message: "This is a demo of the password reset flow. The reset password link is shown as if it were sent to"
+      })
     } catch (e) {
       toast.custom(t => <CustomToast t={t} message="An error occurred" icon={CircleX} iconStyles="text-red-500" />)
       setLoading(false)

@@ -32,6 +32,8 @@ import SearchLayout from "./pages/SearchLayout"
 import SearchStories from "./pages/SearchStories"
 import SearchUsers from "./pages/SearchUsers"
 import SearchTopics from "./pages/SearchTopics"
+import { VerificationModalProvider } from "./contexts/VerificationModalContext"
+import VerificationModal from "./components/mycomponents/modals/verificationModal/VerificationModal"
 
 const router = createBrowserRouter([
   {
@@ -94,8 +96,11 @@ function App() {
   return (
     <AuthProvider>
       <ThemeProvider storageKey="writespace-ui-theme" defaultTheme="light">
-        <RouterProvider router={router} />
-        <Toaster />
+        <VerificationModalProvider>
+          <RouterProvider router={router} />
+          <Toaster />
+          <VerificationModal />
+        </VerificationModalProvider>
       </ThemeProvider>
     </AuthProvider>
   )

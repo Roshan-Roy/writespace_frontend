@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router"
-import { AuthModal } from "@/components/mycomponents/modals/authModal/AuthModal"
+import AuthModal from "../modals/authModal/AuthModal"
 import { useState } from "react"
 
 const PublicNavbar = () => {

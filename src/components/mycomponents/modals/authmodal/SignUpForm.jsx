@@ -12,8 +12,11 @@ import toast from "react-hot-toast"
 import { CircleCheck, CircleX, EyeOff, Eye } from "lucide-react"
 import CustomToast from "../../toast/CustomToast"
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "@/components/ui/input-group"
+import { useVerificationModal } from "@/contexts/VerificationModalContext"
 
 const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
+    const { setVerificationModalData } = useVerificationModal()
+
     const [data, setData] = useState({
         username: "",
         email: "",
@@ -41,10 +44,19 @@ const SignUpForm = ({ setOpenModal, setDisableClosing }) => {
         try {
             setDisableClosing(true)
             setLoading(true)
-            await axios.post(`${API_URL}signup/`, data)
+            const response = await axios.post(`${API_URL}signup/`, data)
+            const signupData = response.data.data
             setOpenModal(null)
-            toast.custom(t => <CustomToast t={t} message="Verification email sent!" icon={CircleCheck} iconStyles="text-green-500" />)
+            setVerificationModalData({
+                email_subject: "Activate your WriteSpace account",
+                email_body: "Click the link to verify your account:",
+                email_to: signupData.email_to,
+                link: signupData.verify_email_url,
+                message: "This is a demo of the email verification flow. The verification link is shown as if it were sent to"
+            })
+            //toast.custom(t => <CustomToast t={t} message="Verification email sent!" icon={CircleCheck} iconStyles="text-green-500" />)
         } catch (e) {
+            console.log(e)
             const status = e.response?.status
             if (status === 400) {
                 const { username, email } = e.response.data || {}

@@ -3,7 +3,7 @@ import SignInForm from "./SignInForm"
 import SignUpForm from "./SignUpForm"
 import { useState } from "react"
 
-export function AuthModal({ openModal, setOpenModal }) {
+const AuthModal = ({ openModal, setOpenModal }) => {
     const [disableClosing, setDisableClosing] = useState(false)
     return (
         <Dialog open={!!openModal} onOpenChange={() => setOpenModal(null)}>
@@ -14,3 +14,5 @@ export function AuthModal({ openModal, setOpenModal }) {
         </Dialog>
     )
 }
+
+export default AuthModal
