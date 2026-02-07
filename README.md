@@ -27,6 +27,7 @@ This project was built to demonstrate real-world frontend architecture, API inte
 - Topic-based content discovery
 - Like, comment & save system
 - Follow writers
+- Light and dark theme switching
 - Notifications for user interactions
 - Search functionality to discover posts, users and topics
 - User profile with published posts
@@ -42,7 +43,7 @@ This project was built to demonstrate real-world frontend architecture, API inte
 - React Router
 - Context API
 - Axios
-- CSS / Modern UI practices
+- Tailwind CSS / Shadcn UI
 
 **Backend**
 - Django
