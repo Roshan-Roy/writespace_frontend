@@ -21,7 +21,7 @@ This project was built to demonstrate real-world frontend architecture, API inte
 ---
 
 ## ✨ Key Features
-- User Authentication – Secure login and registration with email verification and forgot password flows
+- JWT User Authentication – Secure login and registration with email verification and forgot password flows
 - Create, edit, and delete articles
 - Image support for posts and profiles using cloudinary
 - Topic-based content discovery
