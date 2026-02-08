@@ -19,6 +19,10 @@ const LandingPage = () => {
                     <h1 className="font-heading text-[54px] sm:text-[70px] lg:text-[90px] leading-tight">Open<br />minds <span className="whitespace-nowrap">& words</span></h1>
                     <h2 className="text-xl lg:text-2xl">Write, read, and share stories that live beyond the page</h2>
                     <Button className="self-start sm:self-center mt-5 rounded-full px-7 lg:px-10 lg:h-12 lg:text-base" size="lg" onClick={handleOpenSignUpModal}>Start Reading</Button>
+                    <div className="mt-3 lg:mt-2 flex flex-col gap-1 text-sm">
+                        <p>Initial load will take a few seconds.</p>
+                        <p>Demo login - Email: <span className="font-semibold">demo@gmail.com</span> | Password: <span className="font-semibold">12345678</span></p>
+                    </div>
                 </div>
                 <div className="border-t border-t-foreground w-full flex justify-center">
                     <div className="h-15 lg:h-17 w-17/20 flex items-center sm:justify-center gap-3 lg:gap-4">
