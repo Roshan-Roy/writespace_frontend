@@ -55,6 +55,7 @@ This project was built to demonstrate real-world frontend architecture, API inte
 - **Frontend:** Deployed on **Vercel**
 - **Backend & Database:** Deployed on **Render** (free-tier services)
 
+
 **Backend Repository**
 - 🔗 https://writespace-frontend.vercel.app/
 
