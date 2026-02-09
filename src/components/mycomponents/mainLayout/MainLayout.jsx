@@ -5,29 +5,30 @@ import { useAuth } from "@/contexts/AuthContext"
 import { LayoutProvider } from "@/contexts/LayoutContext"
 import SidebarWrapper from "../sidebarWrapper/SidebarWrapper"
 import { NotificationProvider } from "@/contexts/NotificationContext"
-
+import ScrollToTop from "../scrollToTop/ScrollToTop"
 
 const MainLayout = () => {
   const { isAuthenticated } = useAuth()
 
-  if (!isAuthenticated) {
-    return (
-      <>
-        <PublicNavbar />
-        <Outlet />
-      </>
-    )
-  }
-
   return (
-    <LayoutProvider>
-      <NotificationProvider>
-        <PrivateNavbar />
-        <SidebarWrapper>
+    <>
+      <ScrollToTop />
+      {!isAuthenticated ? (
+        <>
+          <PublicNavbar />
           <Outlet />
-        </SidebarWrapper>
-      </NotificationProvider>
-    </LayoutProvider>
+        </>
+      ) : (
+        <LayoutProvider>
+          <NotificationProvider>
+            <PrivateNavbar />
+            <SidebarWrapper>
+              <Outlet />
+            </SidebarWrapper>
+          </NotificationProvider>
+        </LayoutProvider>
+      )}
+    </>
   )
 }
 

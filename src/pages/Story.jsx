@@ -1,7 +1,6 @@
 import api from "@/api/api"
 import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router"
-import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 import NotFoundPage from "@/components/mycomponents/notFoundPage/NotFoundPage"
 import { useParams } from "react-router"
@@ -18,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea"
 import toast from "react-hot-toast"
 import CustomToast from "@/components/mycomponents/toast/CustomToast"
 import Comment from "@/components/mycomponents/comment/Comment"
+import StorySkeleton from "@/components/mycomponents/storySkeleton/StorySkeleton"
 
 const Story = () => {
   const { story_id } = useParams()
@@ -228,7 +228,7 @@ const Story = () => {
     getStory()
   }, [])
 
-  if (pageLoading) return <LoadingPage className="h-[calc(100dvh-56px)]" />
+  if (pageLoading) return <StorySkeleton />
   if (pageError) return <ErrorPage className="h-[calc(100dvh-56px)]" retryFn={handleReloadData} />
   if (notFound) return <NotFoundPage message="Story not found" />
   return (

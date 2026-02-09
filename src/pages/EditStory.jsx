@@ -1,7 +1,6 @@
 import { useParams } from "react-router"
 import { useState, useEffect, useRef } from "react"
 import api from "@/api/api"
-import LoadingPage from "@/components/mycomponents/loadingPage/LoadingPage"
 import ErrorPage from "@/components/mycomponents/errorPage/ErrorPage"
 import { useNavigate } from "react-router"
 import { Textarea } from "@/components/ui/textarea"
@@ -21,6 +20,7 @@ import toast from "react-hot-toast"
 import CustomToast from "@/components/mycomponents/toast/CustomToast"
 import NotFoundPage from "@/components/mycomponents/notFoundPage/NotFoundPage"
 import trim from "@/lib/trim"
+import StorySkeleton from "@/components/mycomponents/storySkeleton/StorySkeleton"
 
 const EditStory = () => {
     const { story_id } = useParams()
@@ -182,7 +182,7 @@ const EditStory = () => {
         }
     }, [])
 
-    if (pageLoading) return <LoadingPage className="h-[calc(100dvh-56px)]" />
+    if (pageLoading) return <StorySkeleton />
     if (pageError) return <ErrorPage className="h-[calc(100dvh-56px)]" retryFn={handleReloadData} />
     if (notFound) return <NotFoundPage message="Story not found" />
     if (modalOpen) {
